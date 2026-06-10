@@ -12,28 +12,44 @@ class Trainer(BaseModel):
     def __init__(self, opt):
         super(Trainer, self).__init__(opt)
 
+        # ── model kwargs (backward compatible) ──
+        model_kwargs = dict(
+            num_classes=1,
+            use_attn_pool=getattr(opt, 'use_attn_pool', False),
+            multi_scale=getattr(opt, 'multi_scale', False),
+            use_sobel=getattr(opt, 'use_sobel', False),
+            use_tkp=getattr(opt, 'use_tkp', False),
+            tkp_k=getattr(opt, 'tkp_k', 5),
+        )
+
         if self.isTrain and not opt.continue_train:
-            self.model = resnet50(pretrained=False, num_classes=1)
+            self.model = resnet50(pretrained=False, **model_kwargs)
 
         if not self.isTrain or opt.continue_train:
-            self.model = resnet50(num_classes=1)
+            self.model = resnet50(**model_kwargs)
+
+        self.use_tkp = model_kwargs['use_tkp']
 
         if self.isTrain:
             self.loss_fn = nn.BCEWithLogitsLoss()
             # initialize optimizers
             if opt.optim == 'adam':
-                self.optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, self.model.parameters()),
-                                                  lr=opt.lr, betas=(opt.beta1, 0.999))
+                self.optimizer = torch.optim.Adam(
+                    filter(lambda p: p.requires_grad, self.model.parameters()),
+                    lr=opt.lr, betas=(opt.beta1, 0.999))
             elif opt.optim == 'sgd':
-                self.optimizer = torch.optim.SGD(filter(lambda p: p.requires_grad, self.model.parameters()),
-                                                 lr=opt.lr, momentum=0.0, weight_decay=0)
+                self.optimizer = torch.optim.SGD(
+                    filter(lambda p: p.requires_grad, self.model.parameters()),
+                    lr=opt.lr, momentum=0.0, weight_decay=0)
             else:
                 raise ValueError("optim should be [adam, sgd]")
 
         if not self.isTrain or opt.continue_train:
             self.load_networks(opt.epoch)
         self.model.to(opt.gpu_ids[0])
- 
+
+        # TKP: alpha weight for auxiliary loss
+        self.tkp_alpha = getattr(opt, 'tkp_alpha', 0.1)
 
     def adjust_learning_rate(self, min_lr=1e-6):
         for param_group in self.optimizer.param_groups:
@@ -41,25 +57,40 @@ class Trainer(BaseModel):
             if param_group['lr'] < min_lr:
                 return False
         self.lr = param_group['lr']
-        print('*'*25)
+        print('*' * 25)
         print(f'Changing lr from {param_group["lr"]/0.9} to {param_group["lr"]}')
-        print('*'*25)
+        print('*' * 25)
         return True
 
     def set_input(self, input):
         self.input = input[0].to(self.device)
         self.label = input[1].to(self.device).float()
 
-
+    # ── forward: return main + aux output for TKP ──
     def forward(self):
-        self.output = self.model(self.input)
+        out = self.model(self.input)
+        if self.use_tkp:
+            # During training, TKP returns vec, vec_aux (see tkp.py)
+            # For simplicity we compute aux loss inside optimize_parameters.
+            self.output = out
+        else:
+            self.output = out
 
     def get_loss(self):
         return self.loss_fn(self.output.squeeze(1), self.label)
 
     def optimize_parameters(self):
         self.forward()
-        self.loss = self.loss_fn(self.output.squeeze(1), self.label)
+        loss_main = self.loss_fn(self.output.squeeze(1), self.label)
+
+        # ── TKP auxiliary loss ──
+        if self.use_tkp and hasattr(self.model, 'tkp_vec_aux'):
+            fc_aux = self.model.fc1(self.model.tkp_vec_aux)
+            loss_aux = self.loss_fn(fc_aux.squeeze(1), self.label)
+            self.loss = loss_main + self.tkp_alpha * loss_aux
+        else:
+            self.loss = loss_main
+
         self.optimizer.zero_grad()
         self.loss.backward()
         self.optimizer.step()

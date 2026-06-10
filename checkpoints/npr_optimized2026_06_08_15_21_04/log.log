@@ -1,0 +1,1 @@
+train.py  --name  npr_optimized  --multi_scale  --use_sobel  --use_tkp  --freq_aug_prob  0.3  --freq_aug_alpha  0.3  --dataroot  ./datasets/ForenSynths_train_val  --classes  car,cat,chair,horse  --batch_size  32  --lr  0.0002  --niter  5  --delr_freq  10

@@ -1,0 +1,1 @@
+train.py  --dataroot  ./dataset/ForenSynths_train_val  --niter  5  --name  freqcat_5epoch  --use_freq

@@ -14,6 +14,7 @@ from options.train_options import TrainOptions
 from options.test_options import TestOptions
 from util import Logger
 
+#消除随机性
 import random
 def seed_torch(seed=1029):
     random.seed(seed)
@@ -51,6 +52,7 @@ if __name__ == '__main__':
     Logger(os.path.join(opt.checkpoints_dir, opt.name, 'log.log'))
     print('  '.join(list(sys.argv)) )
     val_opt = get_val_opt()
+    val_opt = get_val_opt()
     Testopt = TestOptions().parse(print_options=False)
     data_loader = create_dataloader(opt)
 
@@ -75,6 +77,8 @@ if __name__ == '__main__':
     model.eval();testmodel();
     model.train()
     print(f'cwd: {os.getcwd()}')
+    train_start = time.time()
+    time_limit_sec = opt.time_limit * 3600
     for epoch in range(opt.niter):
         epoch_start_time = time.time()
         iter_data_time = time.time()
@@ -105,6 +109,11 @@ if __name__ == '__main__':
         print("(Val @ epoch {}) acc: {}; ap: {}".format(epoch, acc, ap))
         testmodel()
         model.train()
+
+        if time_limit_sec > 0 and (time.time() - train_start) >= time_limit_sec:
+            elapsed = time.time() - train_start
+            print(f"Time limit reached ({elapsed/3600:.1f}h >= {opt.time_limit}h), stopping after epoch {epoch}")
+            break
 
     model.eval();testmodel()
     model.save_networks('last')

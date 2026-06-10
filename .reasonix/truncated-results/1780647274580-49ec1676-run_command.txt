@@ -1,0 +1,979 @@
+$ NPR-VENV/Scripts/python.exe -c "
+import pymupdf
+doc = pymupdf.open(r'C:\Users\xxf\OneDrive\Desktop\aI生成图像检测\4584_Are_High_Quality_AI_Gener.pdf')
+# Print pages 4-10 for the methodology
+for i in range(3, min(12, len(doc))):
+    text = doc[i].get_text()
+    print(f'=== PAGE {i+1} ===')
+    print(text[:3000])
+    print()
+"
+[exit 0]
+=== PAGE 4 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+0 1 2 3 4 5 6
+#Correct
+0.0
+0.1
+0.2
+0.3
+Proportion
+SD 2.1
+0 1 2 3 4 5 6
+#Correct
+SDXL 1.0
+0 1 2 3 4 5 6
+#Correct
+SD 3
+0 1 2 3 4 5 6
+#Correct
+PixArt-
+0 1 2 3 4 5 6
+#Correct
+0.0
+0.1
+0.2
+0.3
+Proportion
+SD 2.1
+0 1 2 3 4 5 6
+#Correct
+SDXL 1.0
+0 1 2 3 4 5 6
+#Correct
+SD 3
+0 1 2 3 4 5 6
+#Correct
+PixArt-
+-1.00
+-0.75
+-0.50
+-0.25
+0.00
+0.20
+0.40
+0.40
+0.60
+0.80
+0.40
+0.45
+0.50
+ImageReward
+0.22
+0.24
+0.26
+0.27
+0.25
+0.26
+0.27
+0.27
+0.28
+0.28
+HPS v2
+Figure 2: Average quality scores (the red curve) for gener-
+ated images of different difficulty levels and the distribution
+of sample difficulty (the blue histogram). The difficulty is
+measured by the number of correct predictions (#Correct)
+from the 6 detectors. Notably, images that are easier to de-
+tect (e.g., #Correct ≥5) tend to have higher quality scores.
+detectors typically pre-process input images using center
+cropping without resizing. For evaluation, we directly apply
+the official pre-trained weights and configurations to testing
+on our dataset.
+3.2. Main Observations
+By investigating AIGI detectors on generated images of
+different quality scores, we make an intriguing observation:
+images with higher quality scores tend to be easier to detect,
+as suggested by Figure 11. Specifically, for each genera-
+tor and preference model, we uniformly split the range of
+quality scores into 30 segments and calculate the average de-
+tector accuracy on samples corresponding to each segment.
+A consistent trend emerges: for images with quality scores
+above the distribution peak, average detector accuracy
+generally increases as the quality score rises. Addition-
+ally, while detectors may achieve relatively high accuracy
+on images with low quality scores, this performance still
+falls short compared to that on the highest-quality images.
+To further explore the relationship between quality scores
+and average detector accuracy, we plot the changes in qual-
+ity scores as a function of detection difficulty in Figure 2,
+which can be viewed as a transposition of Figure 1. Specifi-
+cally, since the possible values of average accuracy of the 6
+detectors are discrete for a single sample, we use the number
+of detectors that correctly classify the sample as an index for
+detection difficulty (with a lower number indicating higher
+difficulty). As shown in Figure 2, images that are easier
+to detect tend to have higher quality scores. In conjunc-
+tion with the observations in Figure 1, there is a positive
+correlation between quality scores and detector accuracy,
+particularly for images of higher quality.
+1Additional results on more generators and human preference
+models are provided in Appendix B.1.
+0
+20
+40
+60
+80
+100
+120
+0.000
+0.005
+0.010
+Density
+SD 2.1
+0
+20
+40
+60
+80
+100
+120
+SDXL 1.0
+0
+20
+40
+60
+80
+100
+120
+SD 3
+0
+20
+40
+60
+80
+100
+120
+PixArt-
+0
+20
+40
+60
+80
+100
+120
+0.000
+0.005
+0.010
+Density
+SD 2.1
+0
+20
+40
+60
+80
+100
+120
+SDXL 1.0
+0
+20
+40
+60
+80
+100
+120
+SD 3
+0
+20
+40
+60
+80
+100
+120
+P
+
+=== PAGE 5 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Figure 4: Analyses on generated images clustered by quality-related features extracted by ImageReward model. Left: The
+average detector accuracy and the average quality scores are consistently positively correlated at the cluster level. Each point
+represents an image cluster. The Pearson’s correlation coefficient r and the p-value are shown in the top left corner for each
+figure. Right: Visualization of image patches from typical clusters of PixArt-α with high average detector accuracy and
+high average quality scores. We take the center 224 × 224 patch in alignment with the pre-processing pipeline of detectors
+studied in this paper.
+slightly lower quality scores compared to those generated
+from medium-length prompts with 21–40 words.
+More importantly, we find that text prompt complexity has
+a similar influence on average detector accuracy. Figure 3
+reveals that generated images produced from short prompts
+not only have higher quality scores but are also easier to
+detect. This finding provides further insight into our observa-
+tion in Section 3, suggesting that certain types of generated
+images inherently exhibit both high quality scores and high
+detector accuracy.
+To understand how text prompt complexity affects the gen-
+erated images, we first conduct a preliminary analysis of
+their visual characteristics. A notable trait of images gener-
+ated from short prompts is their relatively simple semantic
+content and structure, which can be attributed to the limited
+number of entities mentioned in the prompts. In addition,
+regarding the shortest prompts, we find that the absence of
+descriptions of visual attributes appears to contribute to the
+relatively lower quality scores of the generated images. In
+particular, prompts specifying object colors tend to produce
+images with higher saturation, which may lead to improved
+quality scores. Further details are provided in Appendix B.3.
+While the analyses based on text prompt complexity of-
+fer valuable insights into the positive correlation between
+quality scores and average detector accuracy, grouping im-
+ages solely by text length may not fully exploit the visual
+attributes that human preference models and detectors are
+sensitive to. Therefore, in the following sections, we extend
+our analysis through image clustering to better understand
+these underlying characteristics.
+4.2. Image Clustering on Quality-Related Features
+The observations in Section 4.1 suggest that high-quality
+images may exhibit certain characteristics that contribute to
+higher detector accuracy. To further explore these common
+traits, we cluster images based on their visual features and
+analyze the average quality scores and detector accuracy
+within each cluster. As we focus on quality-related features,
+the clustering is conducted in the feature space of the Im-
+ageReward (Xu et al., 2023) model. We apply the K-Means
+algorithm (Lloyd, 1982) with k = 50; other implem
+
+=== PAGE 6 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Table 1: Comparison of regression models with different
+sets of independent variables (low-level or high-level fea-
+tures) and different dependent variable y. Standardized
+coefficients for each independent variable and the corre-
+sponding R2-score are presented. The high-level features
+extracted by DINOv2 are reduced to 6 dimensions via PCA.
+(a) Low-level image characteristics
+y
+Lightness Contrast Saturation Sharpness
+Texture
+Richness
+Structural
+Complexity
+R2
+Accuracy
+0.10
+0.52
+0.43
+-0.33
+0.42
+-0.30
+0.77
+ImageReward
+0.26
+0.20
+0.34
+-0.46
+0.35
+-0.25
+0.81
+HPS v2
+0.32
+0.47
+0.34
+-0.71
+0.54
+-0.32
+0.74
+(b) High-level features (reduced to 6 dimensions by PCA)
+y
+x1
+x2
+x3
+x4
+x5
+x6
+R2
+Accuracy
+-0.18
+-0.23
+0.20
+-0.23
+0.04
+0.11
+0.76
+ImageReward
+-0.39
+-0.22
+-0.04
+-0.18
+-0.02
+-0.12
+0.76
+HPS v2
+-0.45
+-0.09
+0.03
+-0.30
+-0.10
+-0.17
+0.68
+ages may be more visually appealing to humans, leading to
+higher quality scores, while their unnatural coloration could
+make them more distinguishable for detectors. Likewise,
+images with fine details and rich textures tend to receive
+higher quality scores, yet detectors might excel at identify-
+ing subtle artifacts in these intricate details, such as slight
+distortions along edges.
+4.3. Linear Regression Analyses
+To further substantiate the findings in Section 4.2 and quan-
+titatively study how image characteristics may influence
+quality scores and average detector accuracy, we perform
+linear regression analyses on different features. Specifically,
+a linear regression model estimates the linear relationship
+between a dependent or target variable (e.g., detector ac-
+curacy or quality score) and a set of independent or input
+variables (e.g., image features). The linear relationship can
+be interpreted from the coefficients of independent variables
+learned from the data. The instantiations of the regression
+analyses and the results are detailed as follows.
+Independent variables. Building on our previous observa-
+tions, we first examine six low-level visual characteristics
+of images: lightness, contrast, saturation, sharpness, texture
+richness, and structural complexity. Each characteristic is
+quantified using a scalar metric, which we treat as an inde-
+pendent variable xi (i = 1, 2, · · · , 6) in a linear regression
+model. The specific choices of metrics are detailed in Ap-
+pendix A.3. Additionally, we explore whether high-level
+features also contribute to the observed positive correlation
+between average detector accuracy and quality scores. To
+this end, we extract high-level features from images us-
+ing DINOv2 (Oquab et al., 2023), a self-supervised image
+encoder, and then reduce the feature dimension to 6 via
+PCA (Pearson, 1901) to align with the low-level features.
+Dependent variable. The dependent variable y can be (1)
+the average accuracy of the detectors, or (2) the average
+preference score predicted by the ImageReward or HPS v2
+model. This yields three re
+
+=== PAGE 7 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Figure 5: Analyses on clusters of images generated by PixArt-α. Left: Cluster distribution in the high-level feature space.
+x2 and x4 correspond to the two independent variables in Table 1b and represent two principal components of the high-level
+features. Points are colored based on the ImageReward scores. Center: The same cluster distribution with points colored
+based on the average detector accuracy. Right: Visualization of image patches from outlier clusters.
+sists of images with dense and distorted characters, which
+leads to low quality scores but makes them not difficult to
+detect. Similarly, detectors achieve relatively high accuracy
+on images in Clusters #16 and #18, which depict planes
+and ships with a number of portholes and have low quality
+scores. These examples suggest that existing detectors may
+be sensitive to certain semantic details like characters and
+portholes. This could explain the phenomenon observed in
+Figure 1 that some lower-quality images are also relatively
+easy to detect.
+Discussion. The linear regression analyses suggest that
+certain low-level image characteristics (e.g., high saturation
+or low sharpness) and high-level features tend to induce
+higher detector accuracy and higher quality scores. From
+a causal perspective (Pearl, 2009), these features could be
+the confounders underlying the counterintuitive positive
+correlation between accuracy and quality. However, through
+further intervention experiments presented in Appendix B.4,
+we find that several low-level image characteristics do not
+have uniform causal effects on the accuracy of different
+detectors, suggesting the existence of other confounding
+factors. Hence, for developing robust and generalizable
+AIGI detectors, future studies could benefit from further
+analyzing how these image features affect detectors.
+5. Can We Optimize Patch-Based AIGI
+Detection Through Quality Analysis?
+In this section, we aim to explore whether our analysis of
+image qualities in Section 4 can be leveraged to optimize
+existing patch-based AIGI detection methods, which typi-
+cally rely on center-cropping and disregard other patches.
+Specifically, we examine whether the regression models
+from Section 4.3 can identify the most detectable patch in
+an image. To this end, we improve patch-based detectors by
+selecting input patches according to the regression models’
+predictions and investigate whether their performance can
+be enhanced on various generators and datasets.
+5.1. Selection Strategies for Input Patches
+Most existing methods for AI-generated image detection
+assume that fake images are completely generated by mod-
+els rather than locally edited from real images. Under this
+setting, a series of methods (Ojha et al., 2023; Tan et al.,
+2024; Koutlis & Papadopoulos, 2024; Baraldi et al., 2024;
+Chen et al., 2024a) adopt center cropping in their image
+pre-processing pipeline without resizing. While limiting
+the rece
+
+=== PAGE 8 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Table 2: Average detector accuracy (%) of end-to-end models on fake images. We compare different patch selection
+strategies based on regression models with different dependent variables y.
+GenImage
+DRCT-2M
+Synthbuster
+Dependent
+Variable y
+Strategy
+Midjourney
+SDXL-
+Refiner
+SDXL-
+Turbo
+LCM-
+SDXL
+SDv2-
+Ctrl
+SDXL-
+Ctrl
+DALL·E 2
+DALL·E 3
+Firefly
+Midjourney
+Average
+/
+Center
+76.3
+75.3
+56.8
+62.6
+75.0
+76.2
+38.1
+51.4
+41.4
+75.0
+62.8
+Easiest
+75.0
+76.0
+56.6
+62.1
+74.8
+76.0
+38.6
+51.3
+45.4
+75.5
+63.1
+Random
+70.6
+72.0
+56.1
+61.1
+73.6
+75.0
+36.7
+50.9
+37.8
+71.1
+60.5
+Accuracy
+Hardest
+63.5
+66.4
+54.9
+60.9
+71.8
+73.4
+34.2
+47.8
+29.5
+63.9
+56.6
+Easiest
+73.1
+75.0
+56.2
+60.5
+74.4
+76.0
+37.6
+50.1
+44.6
+70.9
+61.8
+Random
+70.6
+72.0
+56.1
+61.1
+73.6
+75.0
+36.7
+50.9
+37.8
+71.1
+60.5
+ImageReward
+Hardest
+68.6
+69.3
+54.9
+62.4
+72.2
+73.6
+35.7
+50.8
+37.2
+71.5
+59.6
+Easiest
+74.1
+75.7
+56.3
+61.0
+74.5
+76.0
+38.6
+51.0
+44.2
+73.7
+62.5
+Random
+70.6
+72.0
+56.1
+61.1
+73.6
+75.0
+36.7
+50.9
+37.8
+71.1
+60.5
+HPS v2
+Hardest
+66.3
+67.3
+55.0
+62.0
+72.1
+73.5
+34.3
+49.7
+34.5
+69.2
+58.4
+els, selecting the patch with the lowest score predicted by the
+regression models may yield better detection performance.
+In the following part of this section, we verify our hypothe-
+ses by experimentally comparing four input patch selection
+strategies: (1) Easiest: selecting the patch with the high-
+est predicted score; (2) Hardest: selecting the patch with
+the lowest predicted score; (3) Random: selecting a ran-
+dom patch; (4) Center: taking the center patch, as in the
+aforementioned existing methods.
+5.2. Experiments
+AIGI detectors. In addition to the six AIGI detectors de-
+scribed in Section 3.1, we consider SSP (Chen et al., 2024b),
+which takes a single simple patch for fingerprint extraction.
+We train the SSP model on GenImage (Zhu et al., 2023)
+instead of using the official checkpoints with unsatisfactory
+generalization. Details are provided in Appendix A.5. Over-
+all, the detectors can be categorized into: (1) fingerprint-
+based models: NPR (Tan et al., 2024) and SSP; (2) end-
+to-end models: RINE (Koutlis & Papadopoulos, 2024),
+CoDE (Baraldi et al., 2024), DRCT (Chen et al., 2024a),
+and SuSy (Bernabeu-Perez et al., 2024).
+Datasets. To examine the generalization of the regres-
+sion models on unseen generators, we test the detectors
+using different patch selection strategies on images gener-
+ated by the following generators from existing benchmark
+datasets: Midjourney from GenImage (Zhu et al., 2023);
+SDXL-Refiner, SDXL-Turbo, LCM-SDXL, SDv2-Ctrl, and
+SDXL-Ctrl from DRCT-2M (Chen et al., 2024a); DALL·E 2,
+DALL·E 3, Firefly, and Midjourney from Synthbuster (Bam-
+mey, 2023). We clarify the data selection in Appendix A.6.
+Comparison of different regression models.
+Table 2
+shows the average accuracy of end-to-end detectors on fake
+images produced by different generators. First, selecting
+the input patch with the highest scores predicted by regres-
+sion models (i.e., the Ea
+
+=== PAGE 9 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Table 3: Average performance (%) across all generators
+for different detectors using different patch selection strate-
+gies. ACC: accuracy on all images; AP: average precision;
+ACCfake/ACCreal: accuracy on fake/real images. (*: the
+strategy proposed in (Chen et al., 2024b) for SSP, which
+selects the simplest patch with the lowest texture diversity
+in the input image.)
+Type
+Detector
+Strategy
+ACC
+AP
+ACCfake
+ACCreal
+End-to-end
+RINE
+Center
+75.0
+90.2
+51.6
+98.5
+Easiest
+74.2
+91.9
+49.7
+98.9
+Random
+71.4
+90.3
+44.0
+98.9
+Hardest
+67.6
+90.0
+36.4
+98.9
+CoDE
+Center
+79.4
+78.8
+60.1
+98.8
+Easiest
+79.7
+79.2
+60.8
+98.7
+Random
+79.4
+79.0
+59.9
+99.0
+Hardest
+77.8
+77.2
+56.9
+98.7
+SuSy
+Center
+76.0
+87.6
+59.7
+92.3
+Easiest
+77.8
+89.4
+62.1
+93.6
+Random
+74.4
+87.0
+55.9
+93.0
+Hardest
+69.8
+82.7
+48.6
+91.1
+DRCT
+(Conv-B)
+Center
+75.4
+84.8
+53.7
+97.1
+Easiest
+76.4
+87.6
+53.8
+99.0
+Random
+75.1
+84.2
+54.1
+96.0
+Hardest
+73.3
+82.5
+53.6
+93.1
+DRCT
+(CLIP)
+Center
+78.9
+88.4
+89.0
+68.9
+Easiest
+77.6
+86.7
+89.2
+65.9
+Random
+78.4
+87.6
+88.5
+68.3
+Hardest
+80.3
+88.6
+87.7
+72.9
+Fingerprint-based
+NPR
+Center
+71.6
+75.9
+66.8
+76.3
+Easiest
+69.4
+74.6
+66.6
+72.1
+Random
+73.7
+76.3
+68.5
+78.9
+Hardest
+76.6
+78.6
+71.1
+82.2
+SSP
+Center
+72.0
+79.7
+51.7
+92.4
+Easiest
+70.9
+77.4
+53.8
+88.0
+Random
+73.4
+81.0
+54.9
+92.0
+Hardest
+74.5
+81.0
+56.4
+92.5
+Simplest*
+74.5
+78.3
+64.2
+84.7
+6. Conclusion
+In this paper, we make a counterintuitive observation that
+high-quality AI-generated images (AIGIs) preferred by hu-
+mans tend to be less difficult for models to detect. We ex-
+plain the positive correlation between detector accuracy and
+the quality scores of generated images by investigating the
+influence of text prompts and image features. Our results
+suggest that images generated from shorter text prompts
+or those exhibiting specific low-level image characteris-
+tics (such as high saturation, high contrast, rich texture,
+and low structural complexity) correlate with higher quality
+scores and higher detector accuracy. Finally, we suggest
+that existing patch-based AIGI detectors can be improved
+by selecting the most detectable patch identified based on
+low-level visual characteristics. This validates the broader
+applicability of our findings.
+Acknowledgements
+This work is supported in part by National Natural Science
+Foundation of China (NSFC) under Grant No.62376292,
+U21A20470, Guangdong Provincial General Fund No.
+2024A1515010208.
+Impact Statement
+This paper studies AI-generated image detection, which
+has become an important topic for AI governance as AI-
+generated images become more perceptually indistinguish-
+able from real ones. The findings in this paper suggest po-
+tential strengths and weaknesses of existing detectors, and
+are expected to promote the development of more advanced
+models for detecting various AI-generated images. A po-
+tential negative impact lies in the facilitation of adversarial
+evasion attacks against existing detectors. For instance, as
+suggested by our results,
+
+=== PAGE 10 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Chen, B., Zeng, J., Yang, J., and Yang, R. Drct: Diffusion
+reconstruction contrastive training towards universal de-
+tection of diffusion generated images. In International
+Conference on Machine Learning, 2024a.
+Chen, J., Yao, J., and Niu, L. A single simple patch is all
+you need for ai-generated image detection. arXiv preprint
+arXiv:2402.01123, 2024b.
+Chen, J., YU, J., GE, C., Yao, L., Xie, E., Wang, Z., Kwok,
+J., Luo, P., Lu, H., and Li, Z. Pixart-$\alpha$: Fast
+training of diffusion transformer for photorealistic text-to-
+image synthesis. In International Conference on Learning
+Representations, 2024c.
+Chen, Z., Wang, W., Tian, H., Ye, S., Gao, Z., Cui, E., Tong,
+W., Hu, K., Luo, J., Ma, Z., et al. How far are we to
+gpt-4v? closing the gap to commercial multimodal mod-
+els with open-source suites. Science China Information
+Sciences, 67(12):220101, 2024d.
+Cortex Foundation.
+MidJourney v6 Dataset, 2024.
+URL
+https://huggingface.co/datasets/
+CortexLM/midjourney-v6.
+Corvi, R., Cozzolino, D., Zingarini, G., Poggi, G., Nagano,
+K., and Verdoliva, L. On the detection of synthetic images
+generated by diffusion models. In IEEE International
+Conference on Acoustics, Speech and Signal Processing,
+2023.
+Dang-Nguyen, D.-T., Pasquini, C., Conotter, V., and Boato,
+G. Raise: A raw images dataset for digital image foren-
+sics. In Proceedings of the 6th ACM multimedia systems
+conference, pp. 219–224, 2015.
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei,
+L. Imagenet: A large-scale hierarchical image database.
+In 2009 IEEE conference on computer vision and pattern
+recognition, pp. 248–255. Ieee, 2009.
+Dong, Z., Xiao, Y., Wei, P., and Lin, L. Decoder-only
+llms are better controllers for diffusion models. In Pro-
+ceedings of the 32nd ACM International Conference on
+Multimedia, pp. 10957–10965, 2024.
+Egan, B., Redden, A., XWAVE, and SilentAntagonist.
+Dalle3 1 Million+ High Quality Captions,
+2024.
+URL
+https://huggingface.co/datasets/
+ProGamerGov/synthetic-dataset-1m-
+dalle3-high-quality-captions.
+Esser, P., Kulal, S., Blattmann, A., Entezari, R., M¨uller, J.,
+Saini, H., Levi, Y., Lorenz, D., Sauer, A., Boesel, F., et al.
+Scaling rectified flow transformers for high-resolution
+image synthesis. In International Conference on Machine
+Learning, 2024.
+Fridrich, J. and Kodovsky, J. Rich models for steganalysis
+of digital images. IEEE Transactions on information
+Forensics and Security, 7(3):868–882, 2012.
+Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B.,
+Warde-Farley, D., Ozair, S., Courville, A., and Bengio, Y.
+Generative adversarial nets. Advances in neural informa-
+tion processing systems, 27, 2014.
+Gragnaniello, D., Cozzolino, D., Marra, F., Poggi, G., and
+Verdoliva, L. Are gan generated images easy to detect?
+a critical analysis of the state-of-the-art. In 2021 IEEE
+international conference on multimedia and expo (ICME),
+pp. 1–6. IEEE, 2021.
+Grommelt, P., Weiss, L., Pfreundt, F.-
+
+=== PAGE 11 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Liu, V. and Chilton, L. B. Design guidelines for prompt
+engineering text-to-image generative models. In Proceed-
+ings of the 2022 CHI conference on human factors in
+computing systems, pp. 1–23, 2022.
+Lloyd, S. Least squares quantization in pcm. IEEE transac-
+tions on information theory, 28(2):129–137, 1982.
+Lu, Z., Huang, D., Bai, L., Qu, J., Wu, C., Liu, X., and
+Ouyang, W. Seeing is not always believing: benchmark-
+ing human and model perception of ai-generated images.
+In Advances in Neural Information Processing Systems,
+2023.
+Ma, B., Zong, Z., Song, G., Li, H., and Liu, Y. Exploring the
+role of large language models in prompt encoding for dif-
+fusion models. In The Thirty-eighth Annual Conference
+on Neural Information Processing Systems, 2024.
+Midjourney Inc. Midjourney, 2024. URL https://www.
+midjourney.com/.
+Nichol, A., Dhariwal, P., Ramesh, A., Shyam, P., Mishkin,
+P., McGrew, B., Sutskever, I., and Chen, M. Glide: To-
+wards photorealistic image generation and editing with
+text-guided diffusion models. In International Confer-
+ence on Machine Learning, 2021.
+Ojha, U., Li, Y., and Lee, Y. J. Towards universal fake image
+detectors that generalize across generative models. In
+Proceedings of the IEEE/CVF Conference on Computer
+Vision and Pattern Recognition, 2023.
+Oquab, M., Darcet, T., Moutakanni, T., Vo, H., Szafraniec,
+M., Khalidov, V., Fernandez, P., Haziza, D., Massa, F., El-
+Nouby, A., et al. Dinov2: Learning robust visual features
+without supervision. arXiv preprint arXiv:2304.07193,
+2023.
+Pearl, J. Causality. Cambridge University Press, 2009.
+Pearson, K. On lines and planes of closest fit to systems
+of points in space. The London, Edinburgh, and Dublin
+philosophical magazine and journal of science, 2(11):
+559–572, 1901.
+Peebles, W. S. and Xie, S. Scalable diffusion models with
+transformers. 2023 ieee. In CVF International Conference
+on Computer Vision (ICCV), volume 4172, 2022.
+Peli, E. Contrast in complex images. JOSA A, 7(10):2032–
+2040, 1990.
+pharmapsychotic.
+Clip interrogator,
+2022.
+URL
+https://github.com/pharmapsychotic/
+clip-interrogator.
+Podell, D., English, Z., Lacey, K., Blattmann, A., Dock-
+horn, T., M¨uller, J., Penna, J., and Rombach, R. SDXL:
+Improving latent diffusion models for high-resolution im-
+age synthesis. In International Conference on Learning
+Representations, 2024.
+Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G.,
+Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J.,
+et al. Learning transferable visual models from natural
+language supervision. In International conference on
+machine learning, 2021.
+Ramesh, A., Pavlov, M., Goh, G., Gray, S., Voss, C., Rad-
+ford, A., Chen, M., and Sutskever, I. Zero-shot text-to-
+image generation. In International conference on ma-
+chine learning, 2021.
+Ravi, N., Gabeur, V., Hu, Y.-T., Hu, R., Ryali, C., Ma,
+T., Khedr, H., R¨adle, R., Rolland, C., Gustafson, L.,
+Mintun, E., Pan, J., Alwala, K. V
+
+=== PAGE 12 ===
+Are High-Quality AI-Generated Images More Difficult for Models to Detect?
+Song, W., Yan, Z., Lin, Y., Yao, T., Chen, C., Chen, S.,
+Zhao, Y., Ding, S., and Li, B. A quality-centric frame-
+work for generic deepfake detection.
+arXiv preprint
+arXiv:2411.05335, 2024.
+Tan, C., Liu, H., Zhao, Y., Wei, S., Gu, G., Liu, P., and Wei,
+Y. Rethinking the up-sampling operations in cnn-based
+generative network for generalizable deepfake detection.
+In Proceedings of the IEEE/CVF Conference on Com-
+puter Vision and Pattern Recognition, 2024.
+Wang, S.-Y., Wang, O., Zhang, R., Owens, A., and Efros,
+A. A. Cnn-generated images are surprisingly easy to
+spot... for now. In Proceedings of the IEEE/CVF Confer-
+ence on Computer Vision and Pattern Recognition, 2020.
+Wang, Z., Bao, J., Zhou, W., Wang, W., Hu, H., Chen, H.,
+and Li, H. Dire for diffusion-generated image detection.
+In Proceedings of the IEEE/CVF International Confer-
+ence on Computer Vision, 2023.
+Wu, X., Hao, Y., Sun, K., Chen, Y., Zhu, F., Zhao, R., and Li,
+H. Human preference score v2: A solid benchmark for
+evaluating human preferences of text-to-image synthesis.
+arXiv preprint arXiv:2306.09341, 2023a.
+Wu, X., Sun, K., Zhu, F., Zhao, R., and Li, H. Human
+preference score: Better aligning text-to-image models
+with human preference. In Proceedings of the IEEE/CVF
+International Conference on Computer Vision, pp. 2096–
+2105, 2023b.
+Xu, J., Liu, X., Wu, Y., Tong, Y., Li, Q., Ding, M., Tang, J.,
+and Dong, Y. Imagereward: Learning and evaluating hu-
+man preferences for text-to-image generation. Advances
+in Neural Information Processing Systems, 36, 2023.
+Yan, S., Li, O., Cai, J., Hao, Y., Jiang, X., Hu, Y., and Xie,
+W. A sanity check for ai-generated image detection. In
+International Conference on Learning Representations,
+2025.
+Zhang, B., Zhang, P., Dong, X., Zang, Y., and Wang, J.
+Long-clip: Unlocking the long-text capability of clip. In
+European Conference on Computer Vision, pp. 310–325,
+2024a.
+Zhang, S., Wang, B., Wu, J., Li, Y., Gao, T., Zhang, D.,
+and Wang, Z. Learning multi-dimensional human prefer-
+ence for text-to-image generation. In Proceedings of the
+IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, pp. 8018–8027, 2024b.
+Zhong, N., Xu, Y., Li, S., Qian, Z., and Zhang, X. Patchcraft:
+Exploring texture patch for efficient ai-generated image
+detection. arXiv preprint arXiv:2311.12397, 2024.
+Zhu, M., Chen, H., Yan, Q., Huang, X., Lin, G., Li, W.,
+Tu, Z., Hu, H., Hu, J., and Wang, Y. Genimage: A
+million-scale benchmark for detecting ai-generated image.
+In Advances in Neural Information Processing Systems,
+2023.
+12
+
+

@@ -1,0 +1,780 @@
+train.py  --name  npr_full_aug_50epoch  --dataroot  ./dataset/ForenSynths_train_val  --batch_size  128  --lr  0.0002  --niter  50  --num_threads  8  --multi_scale  --use_sobel  --use_tkp  --freq_aug_prob  0.3  --freq_aug_alpha  0.3  --data_aug  --delr_freq  10
+*************************
+2026_06_10_14_40_59
+(0 progan    ) acc: 50.0; ap: 47.4
+(1 stylegan  ) acc: 50.0; ap: 40.1
+(2 stylegan2 ) acc: 50.0; ap: 35.3
+(3 biggan    ) acc: 50.0; ap: 55.0
+(4 cyclegan  ) acc: 50.0; ap: 42.0
+(5 stargan   ) acc: 50.0; ap: 46.3
+(6 gaugan    ) acc: 50.0; ap: 41.2
+(7 deepfake  ) acc: 49.9; ap: 45.6
+(8 Mean      ) acc: 50.0; ap: 44.1
+*************************
+2026_06_10_14_42_02
+cwd: /home/ac/xxf/NPR-DeepfakeDetection
+(Val @ epoch 0) acc: 0.555; ap: 0.5993533830133593
+*************************
+2026_06_10_14_43_09
+(0 progan    ) acc: 52.1; ap: 53.2
+(1 stylegan  ) acc: 54.6; ap: 56.6
+(2 stylegan2 ) acc: 57.5; ap: 64.7
+(3 biggan    ) acc: 49.6; ap: 49.1
+(4 cyclegan  ) acc: 53.7; ap: 52.0
+(5 stargan   ) acc: 52.2; ap: 52.9
+(6 gaugan    ) acc: 51.1; ap: 50.8
+(7 deepfake  ) acc: 44.5; ap: 43.4
+(8 Mean      ) acc: 51.9; ap: 52.8
+*************************
+2026_06_10_14_44_13
+2026_06_10_14_44_41 Train loss: 0.8338811993598938 at step: 400 lr 0.0002
+(Val @ epoch 1) acc: 0.5325; ap: 0.5632611197385016
+*************************
+2026_06_10_14_45_21
+(0 progan    ) acc: 52.5; ap: 53.2
+(1 stylegan  ) acc: 57.1; ap: 58.8
+(2 stylegan2 ) acc: 64.8; ap: 69.8
+(3 biggan    ) acc: 50.9; ap: 49.7
+(4 cyclegan  ) acc: 51.8; ap: 52.1
+(5 stargan   ) acc: 52.6; ap: 52.5
+(6 gaugan    ) acc: 51.3; ap: 51.4
+(7 deepfake  ) acc: 49.9; ap: 44.5
+(8 Mean      ) acc: 53.9; ap: 54.0
+*************************
+2026_06_10_14_46_25
+2026_06_10_14_47_21 Train loss: 0.9875919818878174 at step: 800 lr 0.0002
+(Val @ epoch 2) acc: 0.53; ap: 0.5536066287399668
+*************************
+2026_06_10_14_47_33
+(0 progan    ) acc: 52.4; ap: 54.3
+(1 stylegan  ) acc: 53.6; ap: 57.8
+(2 stylegan2 ) acc: 57.7; ap: 68.5
+(3 biggan    ) acc: 51.2; ap: 48.8
+(4 cyclegan  ) acc: 49.8; ap: 49.4
+(5 stargan   ) acc: 50.2; ap: 53.5
+(6 gaugan    ) acc: 50.9; ap: 51.5
+(7 deepfake  ) acc: 48.4; ap: 44.1
+(8 Mean      ) acc: 51.8; ap: 53.5
+*************************
+2026_06_10_14_48_38
+(Val @ epoch 3) acc: 0.5525; ap: 0.5740382953852656
+*************************
+2026_06_10_14_49_47
+(0 progan    ) acc: 53.6; ap: 55.7
+(1 stylegan  ) acc: 56.8; ap: 61.1
+(2 stylegan2 ) acc: 61.5; ap: 76.1
+(3 biggan    ) acc: 50.5; ap: 47.9
+(4 cyclegan  ) acc: 54.1; ap: 56.2
+(5 stargan   ) acc: 50.9; ap: 52.8
+(6 gaugan    ) acc: 54.2; ap: 55.8
+(7 deepfake  ) acc: 47.1; ap: 44.0
+(8 Mean      ) acc: 53.6; ap: 56.2
+*************************
+2026_06_10_14_50_55
+2026_06_10_14_51_13 Train loss: 0.7607933282852173 at step: 1200 lr 0.0002
+(Val @ epoch 4) acc: 0.5625; ap: 0.592710060954146
+*************************
+2026_06_10_14_52_06
+(0 progan    ) acc: 55.2; ap: 56.9
+(1 stylegan  ) acc: 58.3; ap: 60.0
+(2 stylegan2 ) acc: 69.8; ap: 74.3
+(3 biggan    ) acc: 51.3; ap: 50.4
+(4 cyclegan  ) acc: 50.1; ap: 52.7
+(5 stargan   ) acc: 53.6; ap: 53.2
+(6 gaugan    ) acc: 53.7; ap: 54.3
+(7 deepfake  ) acc: 48.4; ap: 47.5
+(8 Mean      ) acc: 55.1; ap: 56.2
+*************************
+2026_06_10_14_53_13
+2026_06_10_14_53_59 Train loss: 0.7539947628974915 at step: 1600 lr 0.0002
+(Val @ epoch 5) acc: 0.525; ap: 0.6055756227582765
+*************************
+2026_06_10_14_54_22
+(0 progan    ) acc: 53.5; ap: 58.9
+(1 stylegan  ) acc: 53.0; ap: 60.6
+(2 stylegan2 ) acc: 55.7; ap: 74.4
+(3 biggan    ) acc: 49.6; ap: 47.5
+(4 cyclegan  ) acc: 47.2; ap: 47.4
+(5 stargan   ) acc: 50.2; ap: 52.6
+(6 gaugan    ) acc: 55.9; ap: 54.7
+(7 deepfake  ) acc: 49.8; ap: 46.8
+(8 Mean      ) acc: 51.9; ap: 55.4
+*************************
+2026_06_10_14_55_29
+(Val @ epoch 6) acc: 0.51; ap: 0.5878992321529796
+*************************
+2026_06_10_14_56_39
+(0 progan    ) acc: 50.6; ap: 51.2
+(1 stylegan  ) acc: 50.7; ap: 53.9
+(2 stylegan2 ) acc: 53.0; ap: 60.3
+(3 biggan    ) acc: 51.4; ap: 55.3
+(4 cyclegan  ) acc: 51.2; ap: 58.2
+(5 stargan   ) acc: 50.0; ap: 52.0
+(6 gaugan    ) acc: 50.0; ap: 48.7
+(7 deepfake  ) acc: 50.1; ap: 36.6
+(8 Mean      ) acc: 50.9; ap: 52.0
+*************************
+2026_06_10_14_57_46
+2026_06_10_14_57_53 Train loss: 0.47753894329071045 at step: 2000 lr 0.0002
+(Val @ epoch 7) acc: 0.555; ap: 0.5983043880885642
+*************************
+2026_06_10_14_58_56
+(0 progan    ) acc: 53.6; ap: 58.6
+(1 stylegan  ) acc: 51.8; ap: 54.4
+(2 stylegan2 ) acc: 53.4; ap: 53.1
+(3 biggan    ) acc: 57.2; ap: 55.9
+(4 cyclegan  ) acc: 48.9; ap: 41.0
+(5 stargan   ) acc: 51.2; ap: 60.6
+(6 gaugan    ) acc: 51.2; ap: 47.0
+(7 deepfake  ) acc: 50.0; ap: 67.0
+(8 Mean      ) acc: 52.2; ap: 54.7
+*************************
+2026_06_10_15_00_03
+2026_06_10_15_00_39 Train loss: 0.1322045922279358 at step: 2400 lr 0.0002
+(Val @ epoch 8) acc: 0.9275; ap: 0.9905733424000941
+*************************
+2026_06_10_15_01_13
+(0 progan    ) acc: 90.9; ap: 98.3
+(1 stylegan  ) acc: 85.7; ap: 97.7
+(2 stylegan2 ) acc: 86.0; ap: 97.6
+(3 biggan    ) acc: 75.9; ap: 87.9
+(4 cyclegan  ) acc: 60.5; ap: 73.6
+(5 stargan   ) acc: 91.4; ap: 99.8
+(6 gaugan    ) acc: 57.1; ap: 64.3
+(7 deepfake  ) acc: 54.4; ap: 84.3
+(8 Mean      ) acc: 75.3; ap: 87.9
+*************************
+2026_06_10_15_02_21
+2026_06_10_15_03_25 Train loss: 0.1142551600933075 at step: 2800 lr 0.0002
+(Val @ epoch 9) acc: 0.965; ap: 0.9962212624778533
+*************************
+2026_06_10_15_03_30
+(0 progan    ) acc: 94.7; ap: 99.2
+(1 stylegan  ) acc: 93.1; ap: 98.4
+(2 stylegan2 ) acc: 91.7; ap: 97.7
+(3 biggan    ) acc: 80.6; ap: 90.5
+(4 cyclegan  ) acc: 59.0; ap: 69.4
+(5 stargan   ) acc: 98.0; ap: 99.7
+(6 gaugan    ) acc: 58.5; ap: 65.1
+(7 deepfake  ) acc: 77.9; ap: 94.3
+(8 Mean      ) acc: 81.7; ap: 89.3
+*************************
+2026_06_10_15_04_38
+2026_06_10_15_05_44 changing lr at the end of epoch 10, iters 3102
+*************************
+Changing lr from 0.0002 to 0.00018
+*************************
+(Val @ epoch 10) acc: 0.945; ap: 0.9985397402669434
+*************************
+2026_06_10_15_05_45
+(0 progan    ) acc: 91.2; ap: 99.1
+(1 stylegan  ) acc: 87.6; ap: 99.0
+(2 stylegan2 ) acc: 87.8; ap: 98.8
+(3 biggan    ) acc: 73.7; ap: 88.4
+(4 cyclegan  ) acc: 55.9; ap: 68.1
+(5 stargan   ) acc: 89.6; ap: 99.8
+(6 gaugan    ) acc: 58.3; ap: 67.7
+(7 deepfake  ) acc: 54.1; ap: 85.0
+(8 Mean      ) acc: 74.8; ap: 88.2
+*************************
+2026_06_10_15_06_52
+2026_06_10_15_07_17 Train loss: 0.04170457646250725 at step: 3200 lr 0.00018
+(Val @ epoch 11) acc: 0.9825; ap: 0.9990909270274624
+*************************
+2026_06_10_15_08_03
+(0 progan    ) acc: 96.2; ap: 99.6
+(1 stylegan  ) acc: 93.9; ap: 99.2
+(2 stylegan2 ) acc: 93.7; ap: 99.1
+(3 biggan    ) acc: 82.4; ap: 91.3
+(4 cyclegan  ) acc: 64.7; ap: 71.5
+(5 stargan   ) acc: 94.4; ap: 99.8
+(6 gaugan    ) acc: 61.4; ap: 70.2
+(7 deepfake  ) acc: 53.2; ap: 88.7
+(8 Mean      ) acc: 80.0; ap: 89.9
+*************************
+2026_06_10_15_09_10
+2026_06_10_15_10_01 Train loss: 0.07631305605173111 at step: 3600 lr 0.00018
+(Val @ epoch 12) acc: 0.955; ap: 0.9959882556983457
+*************************
+2026_06_10_15_10_18
+(0 progan    ) acc: 91.1; ap: 98.9
+(1 stylegan  ) acc: 89.5; ap: 98.6
+(2 stylegan2 ) acc: 87.7; ap: 97.9
+(3 biggan    ) acc: 76.2; ap: 91.1
+(4 cyclegan  ) acc: 61.3; ap: 65.7
+(5 stargan   ) acc: 96.0; ap: 99.7
+(6 gaugan    ) acc: 62.5; ap: 72.4
+(7 deepfake  ) acc: 79.0; ap: 86.0
+(8 Mean      ) acc: 80.4; ap: 88.8
+*************************
+2026_06_10_15_11_25
+(Val @ epoch 13) acc: 0.995; ap: 1.0
+*************************
+2026_06_10_15_12_35
+(0 progan    ) acc: 97.2; ap: 99.8
+(1 stylegan  ) acc: 94.3; ap: 99.5
+(2 stylegan2 ) acc: 92.6; ap: 99.1
+(3 biggan    ) acc: 81.3; ap: 89.8
+(4 cyclegan  ) acc: 67.4; ap: 69.3
+(5 stargan   ) acc: 94.4; ap: 99.9
+(6 gaugan    ) acc: 62.6; ap: 69.1
+(7 deepfake  ) acc: 59.1; ap: 88.8
+(8 Mean      ) acc: 81.1; ap: 89.4
+*************************
+2026_06_10_15_13_42
+2026_06_10_15_13_55 Train loss: 0.043973736464977264 at step: 4000 lr 0.00018
+(Val @ epoch 14) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_15_14_52
+(0 progan    ) acc: 98.1; ap: 99.9
+(1 stylegan  ) acc: 94.9; ap: 99.4
+(2 stylegan2 ) acc: 95.2; ap: 99.5
+(3 biggan    ) acc: 82.0; ap: 90.1
+(4 cyclegan  ) acc: 66.2; ap: 70.1
+(5 stargan   ) acc: 90.2; ap: 99.6
+(6 gaugan    ) acc: 63.1; ap: 70.2
+(7 deepfake  ) acc: 54.8; ap: 84.4
+(8 Mean      ) acc: 80.6; ap: 89.1
+*************************
+2026_06_10_15_15_59
+2026_06_10_15_16_41 Train loss: 0.05566833168268204 at step: 4400 lr 0.00018
+(Val @ epoch 15) acc: 0.99; ap: 1.0
+*************************
+2026_06_10_15_17_09
+(0 progan    ) acc: 96.7; ap: 99.8
+(1 stylegan  ) acc: 91.0; ap: 99.6
+(2 stylegan2 ) acc: 90.9; ap: 99.4
+(3 biggan    ) acc: 81.3; ap: 87.6
+(4 cyclegan  ) acc: 71.5; ap: 75.8
+(5 stargan   ) acc: 91.9; ap: 99.8
+(6 gaugan    ) acc: 65.8; ap: 71.3
+(7 deepfake  ) acc: 53.2; ap: 86.6
+(8 Mean      ) acc: 80.3; ap: 90.0
+*************************
+2026_06_10_15_18_17
+(Val @ epoch 16) acc: 0.99; ap: 0.9996750200689191
+*************************
+2026_06_10_15_19_27
+(0 progan    ) acc: 97.7; ap: 99.8
+(1 stylegan  ) acc: 95.6; ap: 99.2
+(2 stylegan2 ) acc: 92.4; ap: 98.1
+(3 biggan    ) acc: 80.5; ap: 91.3
+(4 cyclegan  ) acc: 66.0; ap: 68.2
+(5 stargan   ) acc: 95.9; ap: 99.2
+(6 gaugan    ) acc: 64.2; ap: 72.6
+(7 deepfake  ) acc: 84.6; ap: 87.4
+(8 Mean      ) acc: 84.6; ap: 89.5
+*************************
+2026_06_10_15_20_34
+2026_06_10_15_20_36 Train loss: 0.01088317483663559 at step: 4800 lr 0.00018
+(Val @ epoch 17) acc: 0.9875; ap: 0.9995863284266142
+*************************
+2026_06_10_15_21_44
+(0 progan    ) acc: 95.4; ap: 99.4
+(1 stylegan  ) acc: 93.3; ap: 99.5
+(2 stylegan2 ) acc: 96.5; ap: 99.8
+(3 biggan    ) acc: 80.7; ap: 87.4
+(4 cyclegan  ) acc: 73.8; ap: 77.2
+(5 stargan   ) acc: 85.0; ap: 99.7
+(6 gaugan    ) acc: 66.8; ap: 71.2
+(7 deepfake  ) acc: 50.7; ap: 82.3
+(8 Mean      ) acc: 80.3; ap: 89.6
+*************************
+2026_06_10_15_22_52
+2026_06_10_15_23_23 Train loss: 0.025889795273542404 at step: 5200 lr 0.00018
+(Val @ epoch 18) acc: 0.9975; ap: 0.9998780487804878
+*************************
+2026_06_10_15_24_02
+(0 progan    ) acc: 97.7; ap: 99.9
+(1 stylegan  ) acc: 90.9; ap: 99.3
+(2 stylegan2 ) acc: 90.9; ap: 99.2
+(3 biggan    ) acc: 81.7; ap: 88.2
+(4 cyclegan  ) acc: 70.4; ap: 73.2
+(5 stargan   ) acc: 85.0; ap: 99.3
+(6 gaugan    ) acc: 66.8; ap: 71.8
+(7 deepfake  ) acc: 53.9; ap: 76.8
+(8 Mean      ) acc: 79.7; ap: 88.5
+*************************
+2026_06_10_15_25_10
+2026_06_10_15_26_09 Train loss: 0.00487141776829958 at step: 5600 lr 0.00018
+(Val @ epoch 19) acc: 0.995; ap: 0.9999751243781094
+*************************
+2026_06_10_15_26_20
+(0 progan    ) acc: 96.8; ap: 99.8
+(1 stylegan  ) acc: 92.9; ap: 99.4
+(2 stylegan2 ) acc: 93.7; ap: 99.4
+(3 biggan    ) acc: 82.6; ap: 89.5
+(4 cyclegan  ) acc: 71.2; ap: 76.6
+(5 stargan   ) acc: 91.2; ap: 98.9
+(6 gaugan    ) acc: 67.6; ap: 73.9
+(7 deepfake  ) acc: 62.2; ap: 75.2
+(8 Mean      ) acc: 82.3; ap: 89.1
+*************************
+2026_06_10_15_27_27
+2026_06_10_15_28_35 changing lr at the end of epoch 20, iters 5922
+*************************
+Changing lr from 0.00018 to 0.000162
+*************************
+(Val @ epoch 20) acc: 0.9975; ap: 0.9999751243781094
+*************************
+2026_06_10_15_28_36
+(0 progan    ) acc: 98.5; ap: 99.9
+(1 stylegan  ) acc: 96.2; ap: 99.7
+(2 stylegan2 ) acc: 95.9; ap: 99.6
+(3 biggan    ) acc: 82.8; ap: 90.6
+(4 cyclegan  ) acc: 71.5; ap: 77.4
+(5 stargan   ) acc: 94.2; ap: 99.2
+(6 gaugan    ) acc: 70.0; ap: 76.8
+(7 deepfake  ) acc: 62.5; ap: 77.3
+(8 Mean      ) acc: 83.9; ap: 90.1
+*************************
+2026_06_10_15_29_43
+2026_06_10_15_30_03 Train loss: 0.0014995405217632651 at step: 6000 lr 0.000162
+(Val @ epoch 21) acc: 0.9925; ap: 1.0
+*************************
+2026_06_10_15_30_53
+(0 progan    ) acc: 97.8; ap: 99.9
+(1 stylegan  ) acc: 95.1; ap: 99.3
+(2 stylegan2 ) acc: 92.7; ap: 98.6
+(3 biggan    ) acc: 83.6; ap: 91.8
+(4 cyclegan  ) acc: 69.1; ap: 73.1
+(5 stargan   ) acc: 90.3; ap: 98.4
+(6 gaugan    ) acc: 68.1; ap: 75.7
+(7 deepfake  ) acc: 72.7; ap: 86.6
+(8 Mean      ) acc: 83.7; ap: 90.4
+*************************
+2026_06_10_15_32_01
+2026_06_10_15_32_49 Train loss: 0.035589542239904404 at step: 6400 lr 0.000162
+(Val @ epoch 22) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_15_33_11
+(0 progan    ) acc: 99.2; ap: 100.0
+(1 stylegan  ) acc: 96.3; ap: 99.8
+(2 stylegan2 ) acc: 96.8; ap: 99.9
+(3 biggan    ) acc: 84.1; ap: 91.4
+(4 cyclegan  ) acc: 73.7; ap: 79.7
+(5 stargan   ) acc: 95.2; ap: 99.8
+(6 gaugan    ) acc: 66.8; ap: 74.8
+(7 deepfake  ) acc: 54.9; ap: 86.7
+(8 Mean      ) acc: 83.4; ap: 91.5
+*************************
+2026_06_10_15_34_18
+(Val @ epoch 23) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_15_35_28
+(0 progan    ) acc: 99.0; ap: 99.9
+(1 stylegan  ) acc: 94.7; ap: 99.4
+(2 stylegan2 ) acc: 96.5; ap: 99.8
+(3 biggan    ) acc: 80.5; ap: 87.7
+(4 cyclegan  ) acc: 72.3; ap: 77.9
+(5 stargan   ) acc: 89.4; ap: 98.8
+(6 gaugan    ) acc: 68.2; ap: 73.8
+(7 deepfake  ) acc: 64.8; ap: 77.3
+(8 Mean      ) acc: 83.2; ap: 89.3
+*************************
+2026_06_10_15_36_35
+2026_06_10_15_36_44 Train loss: 0.0023571536876261234 at step: 6800 lr 0.000162
+(Val @ epoch 24) acc: 0.995; ap: 1.0
+*************************
+2026_06_10_15_37_45
+(0 progan    ) acc: 96.4; ap: 99.9
+(1 stylegan  ) acc: 88.9; ap: 99.8
+(2 stylegan2 ) acc: 91.5; ap: 99.8
+(3 biggan    ) acc: 79.8; ap: 88.1
+(4 cyclegan  ) acc: 75.4; ap: 86.4
+(5 stargan   ) acc: 85.6; ap: 99.8
+(6 gaugan    ) acc: 66.5; ap: 75.0
+(7 deepfake  ) acc: 50.5; ap: 82.9
+(8 Mean      ) acc: 79.3; ap: 91.5
+*************************
+2026_06_10_15_38_53
+2026_06_10_15_39_30 Train loss: 0.007687561679631472 at step: 7200 lr 0.000162
+(Val @ epoch 25) acc: 0.995; ap: 1.0
+*************************
+2026_06_10_15_40_03
+(0 progan    ) acc: 98.4; ap: 100.0
+(1 stylegan  ) acc: 91.3; ap: 99.8
+(2 stylegan2 ) acc: 92.7; ap: 99.8
+(3 biggan    ) acc: 84.1; ap: 88.6
+(4 cyclegan  ) acc: 77.7; ap: 83.8
+(5 stargan   ) acc: 89.3; ap: 99.7
+(6 gaugan    ) acc: 73.2; ap: 76.8
+(7 deepfake  ) acc: 50.7; ap: 85.5
+(8 Mean      ) acc: 82.2; ap: 91.7
+*************************
+2026_06_10_15_41_11
+2026_06_10_15_42_16 Train loss: 0.04652317613363266 at step: 7600 lr 0.000162
+(Val @ epoch 26) acc: 0.995; ap: 0.9999501243781095
+*************************
+2026_06_10_15_42_20
+(0 progan    ) acc: 97.6; ap: 99.9
+(1 stylegan  ) acc: 96.0; ap: 99.8
+(2 stylegan2 ) acc: 94.6; ap: 99.7
+(3 biggan    ) acc: 85.5; ap: 93.0
+(4 cyclegan  ) acc: 72.1; ap: 78.2
+(5 stargan   ) acc: 97.1; ap: 99.8
+(6 gaugan    ) acc: 71.8; ap: 80.0
+(7 deepfake  ) acc: 70.0; ap: 92.9
+(8 Mean      ) acc: 85.6; ap: 92.9
+*************************
+2026_06_10_15_43_28
+(Val @ epoch 27) acc: 0.99; ap: 0.9999751243781094
+*************************
+2026_06_10_15_44_38
+(0 progan    ) acc: 97.4; ap: 99.8
+(1 stylegan  ) acc: 96.5; ap: 99.7
+(2 stylegan2 ) acc: 97.4; ap: 99.7
+(3 biggan    ) acc: 81.3; ap: 88.0
+(4 cyclegan  ) acc: 72.3; ap: 76.1
+(5 stargan   ) acc: 89.3; ap: 99.5
+(6 gaugan    ) acc: 67.2; ap: 69.8
+(7 deepfake  ) acc: 50.7; ap: 87.5
+(8 Mean      ) acc: 81.5; ap: 90.0
+*************************
+2026_06_10_15_45_46
+2026_06_10_15_46_11 Train loss: 0.025616416707634926 at step: 8000 lr 0.000162
+(Val @ epoch 28) acc: 0.9575; ap: 0.9999007438057239
+*************************
+2026_06_10_15_46_54
+(0 progan    ) acc: 93.6; ap: 99.8
+(1 stylegan  ) acc: 94.8; ap: 99.4
+(2 stylegan2 ) acc: 93.1; ap: 99.0
+(3 biggan    ) acc: 78.3; ap: 89.8
+(4 cyclegan  ) acc: 65.6; ap: 67.2
+(5 stargan   ) acc: 95.4; ap: 99.3
+(6 gaugan    ) acc: 66.1; ap: 72.6
+(7 deepfake  ) acc: 75.2; ap: 87.9
+(8 Mean      ) acc: 82.8; ap: 89.4
+*************************
+2026_06_10_15_48_01
+2026_06_10_15_48_55 Train loss: 0.0011578426929190755 at step: 8400 lr 0.000162
+(Val @ epoch 29) acc: 0.9925; ap: 0.9999751243781094
+*************************
+2026_06_10_15_49_11
+(0 progan    ) acc: 97.8; ap: 100.0
+(1 stylegan  ) acc: 94.5; ap: 99.8
+(2 stylegan2 ) acc: 92.3; ap: 99.6
+(3 biggan    ) acc: 87.1; ap: 94.1
+(4 cyclegan  ) acc: 74.5; ap: 80.1
+(5 stargan   ) acc: 95.0; ap: 99.8
+(6 gaugan    ) acc: 74.2; ap: 81.1
+(7 deepfake  ) acc: 68.5; ap: 92.0
+(8 Mean      ) acc: 85.5; ap: 93.3
+*************************
+2026_06_10_15_50_17
+2026_06_10_15_51_26 changing lr at the end of epoch 30, iters 8742
+*************************
+Changing lr from 0.000162 to 0.00014580000000000002
+*************************
+(Val @ epoch 30) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_15_51_27
+(0 progan    ) acc: 99.5; ap: 100.0
+(1 stylegan  ) acc: 97.0; ap: 99.9
+(2 stylegan2 ) acc: 95.4; ap: 99.8
+(3 biggan    ) acc: 83.5; ap: 91.6
+(4 cyclegan  ) acc: 73.5; ap: 79.9
+(5 stargan   ) acc: 93.2; ap: 99.7
+(6 gaugan    ) acc: 68.7; ap: 76.7
+(7 deepfake  ) acc: 58.1; ap: 89.5
+(8 Mean      ) acc: 83.6; ap: 92.1
+*************************
+2026_06_10_15_52_34
+2026_06_10_15_52_48 Train loss: 0.001119270222261548 at step: 8800 lr 0.00014580000000000002
+(Val @ epoch 31) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_15_53_43
+(0 progan    ) acc: 99.4; ap: 100.0
+(1 stylegan  ) acc: 95.1; ap: 99.9
+(2 stylegan2 ) acc: 95.3; ap: 99.9
+(3 biggan    ) acc: 85.5; ap: 93.2
+(4 cyclegan  ) acc: 73.0; ap: 81.3
+(5 stargan   ) acc: 90.1; ap: 99.6
+(6 gaugan    ) acc: 68.9; ap: 78.4
+(7 deepfake  ) acc: 54.1; ap: 85.9
+(8 Mean      ) acc: 82.7; ap: 92.3
+*************************
+2026_06_10_15_54_51
+2026_06_10_15_55_34 Train loss: 0.010770698077976704 at step: 9200 lr 0.00014580000000000002
+(Val @ epoch 32) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_15_56_00
+(0 progan    ) acc: 98.5; ap: 99.9
+(1 stylegan  ) acc: 91.5; ap: 99.6
+(2 stylegan2 ) acc: 93.8; ap: 99.7
+(3 biggan    ) acc: 83.3; ap: 88.5
+(4 cyclegan  ) acc: 75.5; ap: 80.5
+(5 stargan   ) acc: 88.3; ap: 99.4
+(6 gaugan    ) acc: 71.0; ap: 74.5
+(7 deepfake  ) acc: 54.4; ap: 75.0
+(8 Mean      ) acc: 82.0; ap: 89.6
+*************************
+2026_06_10_15_57_08
+(Val @ epoch 33) acc: 0.9925; ap: 1.0
+*************************
+2026_06_10_15_58_17
+(0 progan    ) acc: 95.0; ap: 100.0
+(1 stylegan  ) acc: 87.9; ap: 99.9
+(2 stylegan2 ) acc: 85.8; ap: 99.5
+(3 biggan    ) acc: 84.1; ap: 94.8
+(4 cyclegan  ) acc: 68.7; ap: 80.8
+(5 stargan   ) acc: 92.0; ap: 99.9
+(6 gaugan    ) acc: 65.9; ap: 79.7
+(7 deepfake  ) acc: 56.6; ap: 92.4
+(8 Mean      ) acc: 79.5; ap: 93.4
+*************************
+2026_06_10_15_59_25
+2026_06_10_15_59_29 Train loss: 0.004198070615530014 at step: 9600 lr 0.00014580000000000002
+(Val @ epoch 34) acc: 0.9975; ap: 1.0
+*************************
+2026_06_10_16_00_34
+(0 progan    ) acc: 99.1; ap: 100.0
+(1 stylegan  ) acc: 96.9; ap: 99.8
+(2 stylegan2 ) acc: 94.6; ap: 99.5
+(3 biggan    ) acc: 82.2; ap: 89.8
+(4 cyclegan  ) acc: 72.0; ap: 77.9
+(5 stargan   ) acc: 93.3; ap: 99.6
+(6 gaugan    ) acc: 67.9; ap: 73.8
+(7 deepfake  ) acc: 59.8; ap: 79.1
+(8 Mean      ) acc: 83.2; ap: 89.9
+*************************
+2026_06_10_16_01_42
+2026_06_10_16_02_14 Train loss: 0.0007476012106053531 at step: 10000 lr 0.00014580000000000002
+(Val @ epoch 35) acc: 0.9325; ap: 0.9948746258290375
+*************************
+2026_06_10_16_02_52
+(0 progan    ) acc: 92.2; ap: 99.8
+(1 stylegan  ) acc: 90.2; ap: 98.2
+(2 stylegan2 ) acc: 89.1; ap: 97.7
+(3 biggan    ) acc: 76.7; ap: 86.5
+(4 cyclegan  ) acc: 64.1; ap: 64.5
+(5 stargan   ) acc: 93.1; ap: 98.3
+(6 gaugan    ) acc: 65.9; ap: 71.4
+(7 deepfake  ) acc: 61.0; ap: 70.9
+(8 Mean      ) acc: 79.0; ap: 85.9
+*************************
+2026_06_10_16_03_58
+2026_06_10_16_04_58 Train loss: 0.0004847898380830884 at step: 10400 lr 0.00014580000000000002
+(Val @ epoch 36) acc: 0.9975; ap: 1.0
+*************************
+2026_06_10_16_05_07
+(0 progan    ) acc: 99.3; ap: 100.0
+(1 stylegan  ) acc: 96.6; ap: 99.6
+(2 stylegan2 ) acc: 95.2; ap: 99.3
+(3 biggan    ) acc: 82.7; ap: 91.1
+(4 cyclegan  ) acc: 62.7; ap: 70.0
+(5 stargan   ) acc: 95.8; ap: 99.4
+(6 gaugan    ) acc: 62.9; ap: 72.4
+(7 deepfake  ) acc: 79.7; ap: 84.2
+(8 Mean      ) acc: 84.4; ap: 89.5
+*************************
+2026_06_10_16_06_14
+(Val @ epoch 37) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_07_23
+(0 progan    ) acc: 98.9; ap: 100.0
+(1 stylegan  ) acc: 92.9; ap: 99.9
+(2 stylegan2 ) acc: 94.6; ap: 99.9
+(3 biggan    ) acc: 81.7; ap: 91.9
+(4 cyclegan  ) acc: 69.3; ap: 83.9
+(5 stargan   ) acc: 88.9; ap: 99.7
+(6 gaugan    ) acc: 63.1; ap: 77.7
+(7 deepfake  ) acc: 52.2; ap: 83.3
+(8 Mean      ) acc: 80.2; ap: 92.0
+*************************
+2026_06_10_16_08_30
+2026_06_10_16_08_51 Train loss: 0.0020089284516870975 at step: 10800 lr 0.00014580000000000002
+(Val @ epoch 38) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_09_39
+(0 progan    ) acc: 98.9; ap: 100.0
+(1 stylegan  ) acc: 92.9; ap: 99.9
+(2 stylegan2 ) acc: 92.5; ap: 99.9
+(3 biggan    ) acc: 85.2; ap: 94.1
+(4 cyclegan  ) acc: 72.5; ap: 84.4
+(5 stargan   ) acc: 86.9; ap: 99.7
+(6 gaugan    ) acc: 68.3; ap: 81.0
+(7 deepfake  ) acc: 53.6; ap: 89.5
+(8 Mean      ) acc: 81.4; ap: 93.5
+*************************
+2026_06_10_16_10_46
+2026_06_10_16_11_35 Train loss: 0.00022889662068337202 at step: 11200 lr 0.00014580000000000002
+(Val @ epoch 39) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_11_55
+(0 progan    ) acc: 99.5; ap: 100.0
+(1 stylegan  ) acc: 95.5; ap: 99.9
+(2 stylegan2 ) acc: 96.5; ap: 99.9
+(3 biggan    ) acc: 86.2; ap: 93.1
+(4 cyclegan  ) acc: 77.4; ap: 84.5
+(5 stargan   ) acc: 93.7; ap: 99.7
+(6 gaugan    ) acc: 71.2; ap: 78.1
+(7 deepfake  ) acc: 53.8; ap: 83.4
+(8 Mean      ) acc: 84.2; ap: 92.3
+*************************
+2026_06_10_16_13_01
+2026_06_10_16_14_11 changing lr at the end of epoch 40, iters 11562
+*************************
+Changing lr from 0.00014580000000000005 to 0.00013122000000000003
+*************************
+(Val @ epoch 40) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_14_12
+(0 progan    ) acc: 99.2; ap: 100.0
+(1 stylegan  ) acc: 96.7; ap: 99.9
+(2 stylegan2 ) acc: 95.7; ap: 99.9
+(3 biggan    ) acc: 86.6; ap: 93.4
+(4 cyclegan  ) acc: 76.2; ap: 83.4
+(5 stargan   ) acc: 96.1; ap: 99.9
+(6 gaugan    ) acc: 76.0; ap: 82.2
+(7 deepfake  ) acc: 61.3; ap: 91.1
+(8 Mean      ) acc: 86.0; ap: 93.7
+*************************
+2026_06_10_16_15_20
+2026_06_10_16_15_30 Train loss: 0.00021907821064814925 at step: 11600 lr 0.00013122000000000003
+(Val @ epoch 41) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_16_29
+(0 progan    ) acc: 99.5; ap: 100.0
+(1 stylegan  ) acc: 97.7; ap: 99.9
+(2 stylegan2 ) acc: 96.5; ap: 99.9
+(3 biggan    ) acc: 86.4; ap: 93.5
+(4 cyclegan  ) acc: 73.4; ap: 81.0
+(5 stargan   ) acc: 95.9; ap: 99.9
+(6 gaugan    ) acc: 70.9; ap: 78.8
+(7 deepfake  ) acc: 62.7; ap: 91.0
+(8 Mean      ) acc: 85.4; ap: 93.0
+*************************
+2026_06_10_16_17_36
+2026_06_10_16_18_14 Train loss: 0.00019996898481622338 at step: 12000 lr 0.00013122000000000003
+(Val @ epoch 42) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_18_46
+(0 progan    ) acc: 99.6; ap: 100.0
+(1 stylegan  ) acc: 96.4; ap: 99.9
+(2 stylegan2 ) acc: 97.2; ap: 99.9
+(3 biggan    ) acc: 83.4; ap: 89.9
+(4 cyclegan  ) acc: 75.6; ap: 82.9
+(5 stargan   ) acc: 92.0; ap: 99.8
+(6 gaugan    ) acc: 72.5; ap: 78.3
+(7 deepfake  ) acc: 52.9; ap: 89.5
+(8 Mean      ) acc: 83.7; ap: 92.5
+*************************
+2026_06_10_16_19_53
+2026_06_10_16_21_00 Train loss: 0.00010139725054614246 at step: 12400 lr 0.00013122000000000003
+(Val @ epoch 43) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_21_03
+(0 progan    ) acc: 99.5; ap: 100.0
+(1 stylegan  ) acc: 95.4; ap: 99.9
+(2 stylegan2 ) acc: 94.4; ap: 99.8
+(3 biggan    ) acc: 83.0; ap: 90.4
+(4 cyclegan  ) acc: 75.2; ap: 82.1
+(5 stargan   ) acc: 92.0; ap: 99.9
+(6 gaugan    ) acc: 71.0; ap: 78.2
+(7 deepfake  ) acc: 55.0; ap: 84.9
+(8 Mean      ) acc: 83.2; ap: 91.9
+*************************
+2026_06_10_16_22_10
+(Val @ epoch 44) acc: 0.9975; ap: 1.0
+*************************
+2026_06_10_16_23_20
+(0 progan    ) acc: 99.1; ap: 100.0
+(1 stylegan  ) acc: 98.2; ap: 99.9
+(2 stylegan2 ) acc: 98.2; ap: 99.9
+(3 biggan    ) acc: 84.6; ap: 91.7
+(4 cyclegan  ) acc: 75.9; ap: 83.8
+(5 stargan   ) acc: 96.6; ap: 99.9
+(6 gaugan    ) acc: 72.7; ap: 78.9
+(7 deepfake  ) acc: 56.7; ap: 90.9
+(8 Mean      ) acc: 85.2; ap: 93.1
+*************************
+2026_06_10_16_24_26
+2026_06_10_16_24_53 Train loss: 0.00032436687615700066 at step: 12800 lr 0.00013122000000000003
+(Val @ epoch 45) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_25_34
+(0 progan    ) acc: 99.0; ap: 100.0
+(1 stylegan  ) acc: 96.5; ap: 99.9
+(2 stylegan2 ) acc: 94.0; ap: 99.9
+(3 biggan    ) acc: 86.3; ap: 93.5
+(4 cyclegan  ) acc: 80.6; ap: 88.3
+(5 stargan   ) acc: 98.6; ap: 100.0
+(6 gaugan    ) acc: 76.0; ap: 81.9
+(7 deepfake  ) acc: 54.0; ap: 90.6
+(8 Mean      ) acc: 85.6; ap: 94.3
+*************************
+2026_06_10_16_26_42
+2026_06_10_16_27_38 Train loss: 0.026245981454849243 at step: 13200 lr 0.00013122000000000003
+(Val @ epoch 46) acc: 0.9975; ap: 1.0
+*************************
+2026_06_10_16_27_51
+(0 progan    ) acc: 99.5; ap: 100.0
+(1 stylegan  ) acc: 98.3; ap: 99.9
+(2 stylegan2 ) acc: 96.1; ap: 99.8
+(3 biggan    ) acc: 83.5; ap: 91.3
+(4 cyclegan  ) acc: 78.8; ap: 83.9
+(5 stargan   ) acc: 99.3; ap: 100.0
+(6 gaugan    ) acc: 72.4; ap: 78.5
+(7 deepfake  ) acc: 60.1; ap: 90.8
+(8 Mean      ) acc: 86.0; ap: 93.0
+*************************
+2026_06_10_16_28_59
+(Val @ epoch 47) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_30_08
+(0 progan    ) acc: 99.5; ap: 100.0
+(1 stylegan  ) acc: 95.4; ap: 100.0
+(2 stylegan2 ) acc: 94.4; ap: 99.9
+(3 biggan    ) acc: 87.1; ap: 94.4
+(4 cyclegan  ) acc: 71.9; ap: 83.9
+(5 stargan   ) acc: 91.7; ap: 99.8
+(6 gaugan    ) acc: 72.7; ap: 83.6
+(7 deepfake  ) acc: 52.1; ap: 88.5
+(8 Mean      ) acc: 83.1; ap: 93.8
+*************************
+2026_06_10_16_31_15
+2026_06_10_16_31_31 Train loss: 0.05691858381032944 at step: 13600 lr 0.00013122000000000003
+(Val @ epoch 48) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_32_23
+(0 progan    ) acc: 99.0; ap: 100.0
+(1 stylegan  ) acc: 94.7; ap: 99.9
+(2 stylegan2 ) acc: 94.2; ap: 99.9
+(3 biggan    ) acc: 86.8; ap: 93.5
+(4 cyclegan  ) acc: 73.7; ap: 84.3
+(5 stargan   ) acc: 95.2; ap: 100.0
+(6 gaugan    ) acc: 72.4; ap: 81.6
+(7 deepfake  ) acc: 54.2; ap: 88.4
+(8 Mean      ) acc: 83.8; ap: 93.4
+*************************
+2026_06_10_16_33_30
+2026_06_10_16_34_15 Train loss: 0.00025762346922419965 at step: 14000 lr 0.00013122000000000003
+(Val @ epoch 49) acc: 1.0; ap: 1.0
+*************************
+2026_06_10_16_34_40
+(0 progan    ) acc: 99.0; ap: 100.0
+(1 stylegan  ) acc: 95.2; ap: 99.9
+(2 stylegan2 ) acc: 93.8; ap: 99.9
+(3 biggan    ) acc: 85.0; ap: 92.8
+(4 cyclegan  ) acc: 73.4; ap: 85.9
+(5 stargan   ) acc: 95.8; ap: 99.9
+(6 gaugan    ) acc: 67.7; ap: 78.8
+(7 deepfake  ) acc: 60.9; ap: 88.4
+(8 Mean      ) acc: 83.8; ap: 93.2
+*************************
+2026_06_10_16_35_48
+*************************
+2026_06_10_16_35_48
+(0 progan    ) acc: 99.0; ap: 100.0
+(1 stylegan  ) acc: 95.2; ap: 99.9
+(2 stylegan2 ) acc: 93.8; ap: 99.9
+(3 biggan    ) acc: 85.0; ap: 92.8
+(4 cyclegan  ) acc: 73.4; ap: 85.9
+(5 stargan   ) acc: 95.8; ap: 99.9
+(6 gaugan    ) acc: 67.7; ap: 78.8
+(7 deepfake  ) acc: 60.9; ap: 88.4
+(8 Mean      ) acc: 83.8; ap: 93.2
+*************************
+2026_06_10_16_36_55
+Saving model ./checkpoints/npr_full_aug_50epoch2026_06_10_14_40_58/model_epoch_last.pth

@@ -27,9 +27,9 @@ def validate(model, opt):
 if __name__ == '__main__':
     opt = TestOptions().parse(print_options=False)
 
-    model = resnet50(num_classes=1)
+    model = resnet50(num_classes=1, use_attn_pool=getattr(opt, 'use_attn_pool', False))
     state_dict = torch.load(opt.model_path, map_location='cpu')
-    model.load_state_dict(state_dict['model'])
+    model.load_state_dict(state_dict.get('model', state_dict))
     model.cuda()
     model.eval()
 

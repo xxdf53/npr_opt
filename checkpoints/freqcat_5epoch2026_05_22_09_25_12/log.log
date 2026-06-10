@@ -1,0 +1,106 @@
+train.py  --dataroot  ./dataset/ForenSynths_train_val  --niter  5  --name  freqcat_5epoch  --use_freq
+*************************
+2026_05_22_09_25_12
+(0 progan    ) acc: 49.9; ap: 51.3
+(1 stylegan  ) acc: 51.2; ap: 59.4
+(2 stylegan2 ) acc: 51.3; ap: 65.4
+(3 biggan    ) acc: 49.8; ap: 47.0
+(4 cyclegan  ) acc: 47.7; ap: 52.9
+(5 stargan   ) acc: 50.1; ap: 51.4
+(6 gaugan    ) acc: 50.7; ap: 63.3
+(7 deepfake  ) acc: 52.7; ap: 59.7
+(8 Mean      ) acc: 50.4; ap: 56.3
+*************************
+2026_05_22_09_29_57
+cwd: D:\github-ware\NPR-DeepfakeDetection
+2026_05_22_09_33_07 Train loss: 0.7284450531005859 at step: 400 lr 0.0001
+(Val @ epoch 0) acc: 0.5225; ap: 0.7269425705465109
+*************************
+2026_05_22_09_34_32
+(0 progan    ) acc: 52.8; ap: 75.3
+(1 stylegan  ) acc: 51.2; ap: 74.9
+(2 stylegan2 ) acc: 50.7; ap: 74.0
+(3 biggan    ) acc: 53.9; ap: 57.7
+(4 cyclegan  ) acc: 38.5; ap: 44.4
+(5 stargan   ) acc: 62.3; ap: 94.5
+(6 gaugan    ) acc: 44.1; ap: 46.4
+(7 deepfake  ) acc: 50.8; ap: 75.7
+(8 Mean      ) acc: 50.5; ap: 67.9
+*************************
+2026_05_22_09_39_30
+2026_05_22_09_41_17 Train loss: 0.16387291252613068 at step: 800 lr 0.0001
+(Val @ epoch 1) acc: 0.9475; ap: 0.992399228352428
+*************************
+2026_05_22_09_43_46
+(0 progan    ) acc: 90.7; ap: 97.1
+(1 stylegan  ) acc: 93.0; ap: 98.3
+(2 stylegan2 ) acc: 91.9; ap: 98.5
+(3 biggan    ) acc: 71.3; ap: 79.5
+(4 cyclegan  ) acc: 49.3; ap: 52.5
+(5 stargan   ) acc: 96.3; ap: 99.4
+(6 gaugan    ) acc: 50.5; ap: 53.4
+(7 deepfake  ) acc: 59.3; ap: 85.3
+(8 Mean      ) acc: 75.3; ap: 83.0
+*************************
+2026_05_22_09_48_43
+2026_05_22_09_49_16 Train loss: 0.07309075444936752 at step: 1200 lr 0.0001
+2026_05_22_09_52_17 Train loss: 0.20707149803638458 at step: 1600 lr 0.0001
+(Val @ epoch 2) acc: 0.98; ap: 0.9986856661855705
+*************************
+2026_05_22_09_52_58
+(0 progan    ) acc: 94.3; ap: 99.0
+(1 stylegan  ) acc: 90.2; ap: 97.8
+(2 stylegan2 ) acc: 91.2; ap: 98.6
+(3 biggan    ) acc: 68.6; ap: 78.0
+(4 cyclegan  ) acc: 50.1; ap: 53.9
+(5 stargan   ) acc: 83.6; ap: 97.8
+(6 gaugan    ) acc: 49.3; ap: 51.9
+(7 deepfake  ) acc: 52.6; ap: 87.8
+(8 Mean      ) acc: 72.5; ap: 83.1
+*************************
+2026_05_22_09_57_56
+2026_05_22_10_00_15 Train loss: 0.05121202394366264 at step: 2000 lr 0.0001
+(Val @ epoch 3) acc: 0.845; ap: 0.9989158023427734
+*************************
+2026_05_22_10_02_10
+(0 progan    ) acc: 82.8; ap: 98.5
+(1 stylegan  ) acc: 78.9; ap: 98.0
+(2 stylegan2 ) acc: 83.3; ap: 99.0
+(3 biggan    ) acc: 64.2; ap: 77.0
+(4 cyclegan  ) acc: 52.5; ap: 58.6
+(5 stargan   ) acc: 65.6; ap: 92.9
+(6 gaugan    ) acc: 51.9; ap: 54.3
+(7 deepfake  ) acc: 50.9; ap: 85.4
+(8 Mean      ) acc: 66.3; ap: 83.0
+*************************
+2026_05_22_10_07_06
+2026_05_22_10_08_13 Train loss: 0.013504686765372753 at step: 2400 lr 0.0001
+2026_05_22_10_11_14 Train loss: 0.007681682240217924 at step: 2800 lr 0.0001
+(Val @ epoch 4) acc: 0.945; ap: 0.9997751118387825
+*************************
+2026_05_22_10_11_22
+(0 progan    ) acc: 90.4; ap: 99.5
+(1 stylegan  ) acc: 86.3; ap: 98.7
+(2 stylegan2 ) acc: 86.9; ap: 99.1
+(3 biggan    ) acc: 68.2; ap: 81.1
+(4 cyclegan  ) acc: 53.4; ap: 61.4
+(5 stargan   ) acc: 74.8; ap: 98.2
+(6 gaugan    ) acc: 52.8; ap: 56.6
+(7 deepfake  ) acc: 52.9; ap: 87.8
+(8 Mean      ) acc: 70.7; ap: 85.3
+*************************
+2026_05_22_10_16_15
+*************************
+2026_05_22_10_16_15
+(0 progan    ) acc: 90.4; ap: 99.5
+(1 stylegan  ) acc: 86.3; ap: 98.7
+(2 stylegan2 ) acc: 86.9; ap: 99.1
+(3 biggan    ) acc: 68.2; ap: 81.1
+(4 cyclegan  ) acc: 53.4; ap: 61.4
+(5 stargan   ) acc: 74.8; ap: 98.2
+(6 gaugan    ) acc: 52.8; ap: 56.6
+(7 deepfake  ) acc: 52.9; ap: 87.8
+(8 Mean      ) acc: 70.7; ap: 85.3
+*************************
+2026_05_22_10_21_06
+Saving model ./checkpoints\freqcat_5epoch2026_05_22_09_25_12\model_epoch_last.pth

@@ -1,7 +1,9 @@
-scipy
+scipy>=1.8.0
 scikit-learn
 numpy
-opencv_python
+opencv-python
 Pillow
-torch>=1.2.0
-torchvision
+torch>=2.0.0
+torchvision>=0.15.0
+tensorboardX
+gdown>=4.7.1

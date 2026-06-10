@@ -7,10 +7,49 @@ from random import random, choice
 from io import BytesIO
 from PIL import Image
 from PIL import ImageFile
-from scipy.ndimage.filters import gaussian_filter
+from scipy.ndimage import gaussian_filter
 from torchvision.transforms import InterpolationMode
-
+import torch.nn.functional as nnF
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+
+# ── Frequency Attenuation Augment ──────────────────────────────────
+class FrequencyAttenuate:
+    """Randomly weaken the highest-frequency NPR signal during training.
+
+    By 2×2 average-pooling and bilinear upsampling, the f≈0.5 (period-2)
+    component is suppressed while f≈0.25 (period-4) is largely preserved.
+    This forces the model to rely on multi-band NPR cues instead of a single
+    fragile frequency, improving robustness to JPEG / blur without harming
+    cross-generator generalisation.
+
+    Reference: Sec 4.4 of the proposed Multi-Scale Edge-Guided NPR.
+    """
+
+    def __init__(self, prob=0.3, alpha=0.3):
+        self.prob = prob
+        self.alpha = alpha
+
+    def __call__(self, tensor):
+        """Args:
+            tensor: [C, H, W] normalised image (ToTensor + Normalize already applied).
+        Returns:
+            tensor: same shape, with high-freq possibly attenuated.
+        """
+        if self.prob <= 0 or random() >= self.prob:
+            return tensor
+
+        C, H, W = tensor.shape
+        x = tensor.unsqueeze(0)                        # [1, C, H, W]
+
+        # 2×2 avg pool → highest frequencies averaged out
+        down = nnF.avg_pool2d(x, 2, 2)
+        up = nnF.interpolate(down, size=(H, W), mode='bilinear',
+                             align_corners=False)
+
+        # alpha * smooth + (1-alpha) * original
+        result = x + self.alpha * (up - x)              # [1, C, H, W]
+        return result.squeeze(0)
 
 def dataset_folder(opt, root):
     if opt.mode == 'binary':
@@ -38,16 +77,22 @@ def binary_dataset(opt, root):
         # rz_func = transforms.Lambda(lambda img: custom_resize(img, opt))
         rz_func = transforms.Resize((opt.loadSize, opt.loadSize))
 
-    dset = datasets.ImageFolder(
-            root,
-            transforms.Compose([
-                rz_func,
-                # transforms.Lambda(lambda img: data_augment(img, opt)),
-                crop_func,
-                flip_func,
-                transforms.ToTensor(),
-                transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            ]))
+    transform_list = [
+        rz_func,
+        transforms.Lambda(lambda img: data_augment(img, opt)) if opt.isTrain and opt.data_aug
+        else transforms.Lambda(lambda img: img),
+        crop_func,
+        flip_func,
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ]
+    # ── optional frequency attenuation for training ──
+    freq_prob = getattr(opt, 'freq_aug_prob', 0.0)
+    freq_alpha = getattr(opt, 'freq_aug_alpha', 0.3)
+    if opt.isTrain and freq_prob > 0:
+        transform_list.append(FrequencyAttenuate(prob=freq_prob, alpha=freq_alpha))
+
+    dset = datasets.ImageFolder(root, transforms.Compose(transform_list))
     return dset
 
 
