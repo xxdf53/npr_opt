@@ -135,18 +135,21 @@ class ResNet(nn.Module):
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64 , layers[0])
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
+        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
 
-        # ── pooling ──
+        # ── pooling (2048 = 512 * block.expansion) ──
+        out_ch = 2048
         self.use_attn_pool = use_attn_pool
         if use_attn_pool:
-            self.attn_pool = AttentionPool(512)
+            self.attn_pool = AttentionPool(out_ch)
         elif use_tkp:
-            self.tkp = TopKPooling(512, k=tkp_k)
+            self.tkp = TopKPooling(out_ch, k=tkp_k)
         else:
             self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
 
         # ── fc ──
-        fc_in = 512 * tkp_k if use_tkp else 512
+        fc_in = out_ch * tkp_k if use_tkp else out_ch
         self.fc1 = nn.Linear(fc_in, num_classes)
 
         for m in self.modules():
@@ -219,6 +222,8 @@ class ResNet(nn.Module):
 
         x = self.layer1(x)
         x = self.layer2(x)
+        x = self.layer3(x)
+        x = self.layer4(x)
 
         # 4. Pooling ──────────────────────────────────────────
         if self.use_attn_pool:

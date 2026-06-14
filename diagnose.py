@@ -69,6 +69,7 @@ def main():
         # (name, dataroot, no_crop)
         ("ForenSynths_progan", "./dataset/ForenSynths_train_val/test/progan", True),
         ("NPR_Test_jpeg_q95",  "./NPR_Test_jpeg_q95/my_first_test",      True),
+        ("NPR_Test_jpeg_q98",  "./NPR_Test_jpeg_q98/my_first_test",      True),
         ("NPR_Test_clean",     "./NPR_Test/my_first_test",               True),
     ]
 
