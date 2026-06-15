@@ -121,6 +121,15 @@ def data_augment(img, opt):
         method = sample_discrete(opt.jpg_method)
         qual = sample_discrete(opt.jpg_qual)
         img = jpeg_from_key(img, qual, method)
+        # double JPEG: simulate real-world multi-compression
+        if random() < getattr(opt, 'jpg2_prob', 0.0):
+            qual2 = sample_discrete(opt.jpg_qual)
+            img = jpeg_from_key(img, qual2, method)
+
+    if random() < getattr(opt, 'noise_prob', 0.0):
+        noise_sigma = sample_continuous(getattr(opt, 'noise_sig', [1.0]))
+        img = (img.astype(np.float32) + np.random.randn(*img.shape) * noise_sigma)
+        img = np.clip(img, 0, 255).astype(np.uint8)
 
     return Image.fromarray(img)
 
