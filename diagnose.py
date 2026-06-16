@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--no_multi_scale', action='store_true')
     parser.add_argument('--no_sobel', action='store_true')
     parser.add_argument('--no_tkp', action='store_true')
+    parser.add_argument('--use_rgb_branch', action='store_true')
     args = parser.parse_args()
 
     multi_scale = not args.no_multi_scale
@@ -49,7 +50,7 @@ def main():
     use_tkp     = not args.no_tkp
 
     print(f"Model: {args.model_path}")
-    print(f"Config: multi_scale={multi_scale} sobel={use_sobel} tkp={use_tkp}")
+    print(f"Config: multi_scale={multi_scale} sobel={use_sobel} tkp={use_tkp} rgb_branch={args.use_rgb_branch}")
     print()
 
     # 加载模型
@@ -57,7 +58,8 @@ def main():
                      multi_scale=multi_scale,
                      use_sobel=use_sobel,
                      use_tkp=use_tkp,
-                     tkp_k=args.tpk_k)
+                     tkp_k=args.tpk_k,
+                     use_rgb_branch=args.use_rgb_branch)
     state = torch.load(args.model_path, map_location='cpu')
     model.load_state_dict(state, strict=False)
     model.cuda().eval()

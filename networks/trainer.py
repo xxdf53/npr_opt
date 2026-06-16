@@ -20,6 +20,7 @@ class Trainer(BaseModel):
             use_sobel=getattr(opt, 'use_sobel', False),
             use_tkp=getattr(opt, 'use_tkp', False),
             tkp_k=getattr(opt, 'tkp_k', 5),
+            use_rgb_branch=getattr(opt, 'use_rgb_branch', False),
         )
 
         if self.isTrain and not opt.continue_train:

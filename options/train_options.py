@@ -31,6 +31,7 @@ class TrainOptions(BaseOptions):
         parser.add_argument('--jpg2_prob', type=float, default=0.0, help='probability of double JPEG compression')
         parser.add_argument('--noise_prob', type=float, default=0.0, help='probability of Gaussian noise injection')
         parser.add_argument('--noise_sig', default='1.0', help='sigma for Gaussian noise injection')
+        parser.add_argument('--use_rgb_branch', action='store_true', help='concat raw RGB with NPR before conv1')
         # parser.add_argument('--model_path')
         # parser.add_argument('--no_resize', action='store_true')
         # parser.add_argument('--no_crop', action='store_true')

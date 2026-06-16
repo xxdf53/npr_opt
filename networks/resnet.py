@@ -105,12 +105,13 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1, zero_init_residual=False,
                  use_attn_pool=False, multi_scale=False, use_sobel=False,
-                 use_tkp=False, tkp_k=5):
+                 use_tkp=False, tkp_k=5, use_rgb_branch=False):
         super(ResNet, self).__init__()
 
         self.multi_scale = multi_scale
         self.use_sobel = use_sobel
         self.use_tkp = use_tkp
+        self.use_rgb_branch = use_rgb_branch
 
         # ── Sobel edge kernels (frozen) ──
         if use_sobel:
@@ -123,6 +124,8 @@ class ResNet(nn.Module):
 
         # ── conv1 input channels ──
         in_ch = 9 if multi_scale else 3    # 3 scales × 3 rgb = 9 channels
+        if use_rgb_branch:
+            in_ch += 3                      # concat raw RGB → +3 channels
 
         self.unfoldSize = 2
         self.unfoldIndex = 0
@@ -214,6 +217,10 @@ class ResNet(nn.Module):
             weight = weight.expand_as(npr)
             npr = npr * weight
 
+        # 2.5  RGB branch ─────────────────────────────────────
+        if self.use_rgb_branch:
+            npr = torch.cat([npr, x], dim=1)           # [B, in_ch+3, H, W]
+
         # 3. Backbone ─────────────────────────────────────────
         x = self.conv1(npr)
         x = self.bn1(x)
@@ -267,7 +274,7 @@ def resnet34(pretrained=False, **kwargs):
 
 def resnet50(pretrained=False, use_attn_pool=False,
              multi_scale=False, use_sobel=False, use_tkp=False, tkp_k=5,
-             **kwargs):
+             use_rgb_branch=False, **kwargs):
     """Constructs a ResNet-50 model.
     Args:
         pretrained  (bool): If True, load ImageNet pre-trained weights.
@@ -284,6 +291,7 @@ def resnet50(pretrained=False, use_attn_pool=False,
                    use_sobel=use_sobel,
                    use_tkp=use_tkp,
                    tkp_k=tkp_k,
+                   use_rgb_branch=use_rgb_branch,
                    **kwargs)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
