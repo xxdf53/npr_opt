@@ -15,16 +15,28 @@ def get_dataset(opt):
 '''
 
 import os
-def get_dataset(opt):
-    classes = os.listdir(opt.dataroot) if len(opt.classes) == 0 else opt.classes
+def _load_one_dataset(opt, dataroot):
+    """Load a single dataset from dataroot (handles both flat 0_real/1_fake
+    and nested multi-generator structures)."""
+    classes = os.listdir(dataroot) if len(opt.classes) == 0 else opt.classes
     if '0_real' not in classes or '1_fake' not in classes:
+        # Nested: each subdir is a generator with its own 0_real/1_fake
         dset_lst = []
-        for cls in classes:
-            root = opt.dataroot + '/' + cls
-            dset = dataset_folder(opt, root)
-            dset_lst.append(dset)
+        for cls in sorted(classes):
+            root = os.path.join(dataroot, cls)
+            if os.path.isdir(root):
+                dset_lst.append(dataset_folder(opt, root))
         return torch.utils.data.ConcatDataset(dset_lst)
-    return dataset_folder(opt, opt.dataroot)
+    return dataset_folder(opt, dataroot)
+
+def get_dataset(opt):
+    dataset = _load_one_dataset(opt, opt.dataroot)
+    extra = getattr(opt, 'extra_dataroot', None)
+    if extra:
+        print(f"Mixing extra dataset: {extra}")
+        extra_dset = _load_one_dataset(opt, extra)
+        dataset = torch.utils.data.ConcatDataset([dataset, extra_dset])
+    return dataset
 
 def get_bal_sampler(dataset):
     targets = []

@@ -105,13 +105,13 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1, zero_init_residual=False,
                  use_attn_pool=False, multi_scale=False, use_sobel=False,
-                 use_tkp=False, tkp_k=5, use_rgb_branch=False):
+                 use_tkp=False, tkp_k=5, full_layers=True):
         super(ResNet, self).__init__()
 
         self.multi_scale = multi_scale
         self.use_sobel = use_sobel
         self.use_tkp = use_tkp
-        self.use_rgb_branch = use_rgb_branch
+        self.full_layers = full_layers
 
         # ── Sobel edge kernels (frozen) ──
         if use_sobel:
@@ -124,8 +124,6 @@ class ResNet(nn.Module):
 
         # ── conv1 input channels ──
         in_ch = 9 if multi_scale else 3    # 3 scales × 3 rgb = 9 channels
-        if use_rgb_branch:
-            in_ch += 3                      # concat raw RGB → +3 channels
 
         self.unfoldSize = 2
         self.unfoldIndex = 0
@@ -138,11 +136,14 @@ class ResNet(nn.Module):
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64 , layers[0])
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
-        self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
-        self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
-
-        # ── pooling (2048 = 512 * block.expansion) ──
-        out_ch = 2048
+        if full_layers:
+            self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
+            self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
+            out_ch = 2048  # 512 * expansion
+        else:
+            self.layer3 = None
+            self.layer4 = None
+            out_ch = 512   # 128 * expansion
         self.use_attn_pool = use_attn_pool
         if use_attn_pool:
             self.attn_pool = AttentionPool(out_ch)
@@ -217,10 +218,6 @@ class ResNet(nn.Module):
             weight = weight.expand_as(npr)
             npr = npr * weight
 
-        # 2.5  RGB branch ─────────────────────────────────────
-        if self.use_rgb_branch:
-            npr = torch.cat([npr, x], dim=1)           # [B, in_ch+3, H, W]
-
         # 3. Backbone ─────────────────────────────────────────
         x = self.conv1(npr)
         x = self.bn1(x)
@@ -229,8 +226,9 @@ class ResNet(nn.Module):
 
         x = self.layer1(x)
         x = self.layer2(x)
-        x = self.layer3(x)
-        x = self.layer4(x)
+        if self.full_layers:
+            x = self.layer3(x)
+            x = self.layer4(x)
 
         # 4. Pooling ──────────────────────────────────────────
         if self.use_attn_pool:
@@ -274,16 +272,16 @@ def resnet34(pretrained=False, **kwargs):
 
 def resnet50(pretrained=False, use_attn_pool=False,
              multi_scale=False, use_sobel=False, use_tkp=False, tkp_k=5,
-             use_rgb_branch=False, **kwargs):
+             full_layers=True, **kwargs):
     """Constructs a ResNet-50 model.
     Args:
         pretrained  (bool): If True, load ImageNet pre-trained weights.
-                            Not compatible with multi_scale/use_tkp.
         use_attn_pool (bool): Use attention pooling instead of GAP.
         multi_scale  (bool): Use 3-scale NPR (0.25/0.50/0.75).
         use_sobel    (bool): Enable Sobel edge-guided weighting.
         use_tkp      (bool): Replace GAP with Top-K Pooling.
         tkp_k        (int):  Number of top activations per channel.
+        full_layers  (bool): Use full 4-layer ResNet (True) or 2-layer (False).
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3],
                    use_attn_pool=use_attn_pool,
@@ -291,7 +289,7 @@ def resnet50(pretrained=False, use_attn_pool=False,
                    use_sobel=use_sobel,
                    use_tkp=use_tkp,
                    tkp_k=tkp_k,
-                   use_rgb_branch=use_rgb_branch,
+                   full_layers=full_layers,
                    **kwargs)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
