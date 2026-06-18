@@ -20,7 +20,11 @@ def validate(model, opt):
     r_acc = accuracy_score(y_true[y_true==0], y_pred[y_true==0] > 0.5)
     f_acc = accuracy_score(y_true[y_true==1], y_pred[y_true==1] > 0.5)
     acc = accuracy_score(y_true, y_pred > 0.5)
-    ap = average_precision_score(y_true, y_pred)
+    # compat with sklearn >= 1.6
+    try:
+        ap = average_precision_score(y_true, y_pred)
+    except ValueError:
+        ap = average_precision_score(y_true, y_pred.reshape(-1, 1))
     return acc, ap, r_acc, f_acc, y_true, y_pred
 
 
