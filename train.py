@@ -40,7 +40,7 @@ def get_val_opt():
     val_opt.no_resize = False
     val_opt.no_crop = False
     val_opt.serial_batches = True
-
+    val_opt.extra_dataroot = None   # validation only on main dataset
     return val_opt
 
 

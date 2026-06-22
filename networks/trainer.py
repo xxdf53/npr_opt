@@ -21,6 +21,7 @@ class Trainer(BaseModel):
             use_tkp=getattr(opt, 'use_tkp', False),
             tkp_k=getattr(opt, 'tkp_k', 5),
             full_layers=getattr(opt, 'full_layers', True),
+            use_post_bn=getattr(opt, 'use_post_bn', True),
         )
 
         if self.isTrain and not opt.continue_train:
@@ -35,9 +36,11 @@ class Trainer(BaseModel):
             self.loss_fn = nn.BCEWithLogitsLoss()
             # initialize optimizers
             if opt.optim == 'adam':
+                wd = getattr(opt, 'weight_decay', 1e-4)
                 self.optimizer = torch.optim.Adam(
                     filter(lambda p: p.requires_grad, self.model.parameters()),
-                    lr=opt.lr, betas=(opt.beta1, 0.999))
+                    lr=opt.lr, betas=(opt.beta1, 0.999),
+                    weight_decay=wd)
             elif opt.optim == 'sgd':
                 self.optimizer = torch.optim.SGD(
                     filter(lambda p: p.requires_grad, self.model.parameters()),
@@ -84,13 +87,20 @@ class Trainer(BaseModel):
         self.forward()
         loss_main = self.loss_fn(self.output.squeeze(1), self.label)
 
+        # ── fc1 weight L2 penalty (prevents explosion from all-positive GAP features) ──
+        fc1_reg = 0.0
+        fc1_wd = getattr(self.opt, 'fc1_wd', 0.01)
+        if fc1_wd > 0:
+            fc1_reg = fc1_wd * (self.model.fc1.weight.pow(2).sum() +
+                                self.model.fc1.bias.pow(2).sum())
+
         # ── TKP auxiliary loss ──
         if self.use_tkp and hasattr(self.model, 'tkp_vec_aux'):
             fc_aux = self.model.fc1(self.model.tkp_vec_aux)
             loss_aux = self.loss_fn(fc_aux.squeeze(1), self.label)
-            self.loss = loss_main + self.tkp_alpha * loss_aux
+            self.loss = loss_main + self.tkp_alpha * loss_aux + fc1_reg
         else:
-            self.loss = loss_main
+            self.loss = loss_main + fc1_reg
 
         self.optimizer.zero_grad()
         self.loss.backward()

@@ -105,13 +105,15 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1, zero_init_residual=False,
                  use_attn_pool=False, multi_scale=False, use_sobel=False,
-                 use_tkp=False, tkp_k=5, full_layers=True):
+                 use_tkp=False, tkp_k=5, full_layers=True,
+                 use_post_bn=True):
         super(ResNet, self).__init__()
 
         self.multi_scale = multi_scale
         self.use_sobel = use_sobel
         self.use_tkp = use_tkp
         self.full_layers = full_layers
+        self.use_post_bn = use_post_bn
 
         # ── Sobel edge kernels (frozen) ──
         if use_sobel:
@@ -152,8 +154,14 @@ class ResNet(nn.Module):
         else:
             self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
 
-        # ── fc ──
+        # ── Post-pool BatchNorm (normalises all-positive GAP features) ──
         fc_in = out_ch * tkp_k if use_tkp else out_ch
+        if use_post_bn and not use_attn_pool and not use_tkp:
+            self.post_pool_bn = nn.BatchNorm1d(fc_in)
+        else:
+            self.post_pool_bn = None
+
+        # ── fc ──
         self.fc1 = nn.Linear(fc_in, num_classes)
 
         for m in self.modules():
@@ -241,6 +249,8 @@ class ResNet(nn.Module):
         else:
             x = self.avgpool(x)
             x = x.view(x.size(0), -1)
+            if self.post_pool_bn is not None:
+                x = self.post_pool_bn(x)   # normalise all-positive features
 
         # 5. Classification ────────────────────────────────────
         x = self.fc1(x)
@@ -272,7 +282,7 @@ def resnet34(pretrained=False, **kwargs):
 
 def resnet50(pretrained=False, use_attn_pool=False,
              multi_scale=False, use_sobel=False, use_tkp=False, tkp_k=5,
-             full_layers=True, **kwargs):
+             full_layers=True, use_post_bn=True, **kwargs):
     """Constructs a ResNet-50 model.
     Args:
         pretrained  (bool): If True, load ImageNet pre-trained weights.
@@ -282,6 +292,7 @@ def resnet50(pretrained=False, use_attn_pool=False,
         use_tkp      (bool): Replace GAP with Top-K Pooling.
         tkp_k        (int):  Number of top activations per channel.
         full_layers  (bool): Use full 4-layer ResNet (True) or 2-layer (False).
+        use_post_bn  (bool): Add BatchNorm after GAP to normalise features.
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3],
                    use_attn_pool=use_attn_pool,
@@ -290,6 +301,7 @@ def resnet50(pretrained=False, use_attn_pool=False,
                    use_tkp=use_tkp,
                    tkp_k=tkp_k,
                    full_layers=full_layers,
+                   use_post_bn=use_post_bn,
                    **kwargs)
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))

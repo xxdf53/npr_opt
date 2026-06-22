@@ -127,6 +127,8 @@ def main():
     parser.add_argument('--no_sobel', action='store_true')
     parser.add_argument('--no_tkp', action='store_true')
     parser.add_argument('--no_layer34', action='store_true', help='use 2-layer ResNet')
+    parser.add_argument('--no_post_bn', action='store_true',
+                        help='disable post-GAP BatchNorm (auto-detected from checkpoint by default)')
     args = parser.parse_args()
 
     multi_scale = not args.no_multi_scale
@@ -134,8 +136,19 @@ def main():
     use_tkp     = not args.no_tkp
     full_layers = not args.no_layer34
 
+    # Auto-detect use_post_bn from checkpoint
+    state = torch.load(args.model_path, map_location='cpu')
+    if not args.no_post_bn:
+        # If 'post_pool_bn.weight' exists in checkpoint, model needs use_post_bn=True
+        use_post_bn = 'post_pool_bn.weight' in state
+        if use_post_bn:
+            print("Detected post-GAP BN in checkpoint, enabling use_post_bn")
+    else:
+        use_post_bn = False
+
     print(f"Model: {args.model_path}")
-    print(f"Config: multi_scale={multi_scale} sobel={use_sobel} tkp={use_tkp} full_layers={full_layers} tta={args.tta}")
+    print(f"Config: multi_scale={multi_scale} sobel={use_sobel} tkp={use_tkp} "
+          f"full_layers={full_layers} post_bn={use_post_bn} tta={args.tta}")
     print()
 
     model = resnet50(num_classes=1,
@@ -143,8 +156,8 @@ def main():
                      use_sobel=use_sobel,
                      use_tkp=use_tkp,
                      tkp_k=args.tpk_k,
-                     full_layers=full_layers)
-    state = torch.load(args.model_path, map_location='cpu')
+                     full_layers=full_layers,
+                     use_post_bn=use_post_bn)
     model.load_state_dict(state, strict=False)
     model.cuda().eval()
 

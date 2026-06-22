@@ -31,9 +31,24 @@ def validate(model, opt):
 if __name__ == '__main__':
     opt = TestOptions().parse(print_options=False)
 
-    model = resnet50(num_classes=1, use_attn_pool=getattr(opt, 'use_attn_pool', False))
     state_dict = torch.load(opt.model_path, map_location='cpu')
-    model.load_state_dict(state_dict.get('model', state_dict))
+    raw_state = state_dict.get('model', state_dict)
+
+    # Auto-detect architecture flags from checkpoint
+    use_post_bn = 'post_pool_bn.weight' in raw_state
+    multi_scale = 'conv1.weight' in raw_state and raw_state['conv1.weight'].shape[1] == 9
+    use_sobel   = 'sobel_x' in raw_state
+    use_tkp     = hasattr(opt, 'use_tkp') and getattr(opt, 'use_tkp', False)
+
+    model = resnet50(num_classes=1,
+                     use_attn_pool=getattr(opt, 'use_attn_pool', False),
+                     multi_scale=multi_scale,
+                     use_sobel=use_sobel,
+                     use_tkp=use_tkp,
+                     tkp_k=getattr(opt, 'tkp_k', 5),
+                     full_layers=True,
+                     use_post_bn=use_post_bn)
+    model.load_state_dict(raw_state)
     model.cuda()
     model.eval()
 
