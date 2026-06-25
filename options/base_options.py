@@ -17,11 +17,11 @@ class BaseOptions():
 
         # data augmentation
         parser.add_argument('--rz_interp', default='bilinear')
-        parser.add_argument('--blur_prob', type=float, default=0)
+        parser.add_argument('--blur_prob', type=float, default=0.1)
         parser.add_argument('--blur_sig', default='0.5')
-        parser.add_argument('--jpg_prob', type=float, default=0)
+        parser.add_argument('--jpg_prob', type=float, default=0.3)
         parser.add_argument('--jpg_method', default='cv2')
-        parser.add_argument('--jpg_qual', default='75')
+        parser.add_argument('--jpg_qual', default='75,95')
 
         parser.add_argument('--dataroot', default='./dataset/', help='path to images (should have subfolders trainA, trainB, valA, valB, etc)')
         parser.add_argument('--classes', default='', help='image classes to train on')
