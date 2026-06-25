@@ -38,10 +38,20 @@ def get_dataset(opt):
         dataset = torch.utils.data.ConcatDataset([dataset, extra_dset])
     return dataset
 
+def _collect_targets(dataset):
+    """Recursively collect targets from ImageFolder or ConcatDataset."""
+    if hasattr(dataset, 'targets'):
+        return list(dataset.targets)
+    if hasattr(dataset, 'datasets'):
+        targets = []
+        for d in dataset.datasets:
+            targets.extend(_collect_targets(d))
+        return targets
+    raise AttributeError(f'Dataset {type(dataset).__name__} has no targets or datasets')
+
+
 def get_bal_sampler(dataset):
-    targets = []
-    for d in dataset.datasets:
-        targets.extend(d.targets)
+    targets = _collect_targets(dataset)
 
     ratio = np.bincount(targets)
     w = 1. / torch.tensor(ratio, dtype=torch.float)
