@@ -55,6 +55,8 @@ class Trainer(BaseModel):
         if not self.isTrain or opt.continue_train:
             self.load_networks(opt.epoch)
         self.model.to(opt.gpu_ids[0])
+        if self.isTrain and hasattr(self, 'loss_fn'):
+            self.loss_fn.pos_weight = self.loss_fn.pos_weight.to(self.device)
 
         # TKP: alpha weight for auxiliary loss
         self.tkp_alpha = getattr(opt, 'tkp_alpha', 0.1)
