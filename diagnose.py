@@ -131,20 +131,34 @@ def main():
                         help='disable post-GAP BatchNorm (auto-detected from checkpoint by default)')
     args = parser.parse_args()
 
-    multi_scale = not args.no_multi_scale
-    use_sobel   = not args.no_sobel
-    use_tkp     = not args.no_tkp
-    full_layers = not args.no_layer34
-
-    # Auto-detect use_post_bn from checkpoint
+    # Load checkpoint first for auto-detection
     state = torch.load(args.model_path, map_location='cpu')
-    if not args.no_post_bn:
-        # If 'post_pool_bn.weight' exists in checkpoint, model needs use_post_bn=True
-        use_post_bn = 'post_pool_bn.weight' in state
-        if use_post_bn:
-            print("Detected post-GAP BN in checkpoint, enabling use_post_bn")
+
+    # Auto-detect architecture from checkpoint (manual flags override)
+    if args.no_multi_scale:
+        multi_scale = False
     else:
+        multi_scale = 'conv1.weight' in state and state['conv1.weight'].shape[1] == 9
+
+    if args.no_sobel:
+        use_sobel = False
+    else:
+        use_sobel = 'sobel_x' in state
+
+    if args.no_tkp:
+        use_tkp = False
+    else:
+        use_tkp = any(k.startswith('tkp.') for k in state.keys())
+
+    if args.no_layer34:
+        full_layers = False
+    else:
+        full_layers = any(k.startswith('layer3.') for k in state.keys())
+
+    if args.no_post_bn:
         use_post_bn = False
+    else:
+        use_post_bn = 'post_pool_bn.weight' in state
 
     print(f"Model: {args.model_path}")
     print(f"Config: multi_scale={multi_scale} sobel={use_sobel} tkp={use_tkp} "

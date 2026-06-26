@@ -33,7 +33,11 @@ class Trainer(BaseModel):
         self.use_tkp = model_kwargs['use_tkp']
 
         if self.isTrain:
-            self.loss_fn = nn.BCEWithLogitsLoss()
+            pos_weight = getattr(opt, 'pos_weight', 1.5)
+            self.loss_fn = nn.BCEWithLogitsLoss(
+                pos_weight=torch.tensor([pos_weight]))
+            if pos_weight != 1.0:
+                print(f'BCEWithLogitsLoss pos_weight={pos_weight}')
             # initialize optimizers
             if opt.optim == 'adam':
                 wd = getattr(opt, 'weight_decay', 1e-4)
