@@ -33,11 +33,13 @@ class Trainer(BaseModel):
         self.use_tkp = model_kwargs['use_tkp']
 
         if self.isTrain:
-            pos_weight = getattr(opt, 'pos_weight', 1.5)
+            pos_weight_val = getattr(opt, 'pos_weight', 1.5)
+            # Create on correct device from the start
+            device = torch.device(f'cuda:{opt.gpu_ids[0]}') if opt.gpu_ids else torch.device('cpu')
             self.loss_fn = nn.BCEWithLogitsLoss(
-                pos_weight=torch.tensor([pos_weight]))
-            if pos_weight != 1.0:
-                print(f'BCEWithLogitsLoss pos_weight={pos_weight}')
+                pos_weight=torch.tensor([pos_weight_val], device=device))
+            if pos_weight_val != 1.0:
+                print(f'BCEWithLogitsLoss pos_weight={pos_weight_val}')
             # initialize optimizers
             if opt.optim == 'adam':
                 wd = getattr(opt, 'weight_decay', 1e-4)
@@ -55,8 +57,6 @@ class Trainer(BaseModel):
         if not self.isTrain or opt.continue_train:
             self.load_networks(opt.epoch)
         self.model.to(opt.gpu_ids[0])
-        if self.isTrain and hasattr(self, 'loss_fn'):
-            self.loss_fn.pos_weight = self.loss_fn.pos_weight.to(self.device)
 
         # TKP: alpha weight for auxiliary loss
         self.tkp_alpha = getattr(opt, 'tkp_alpha', 0.1)
