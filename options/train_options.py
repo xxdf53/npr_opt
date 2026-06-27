@@ -22,7 +22,7 @@ class TrainOptions(BaseOptions):
         parser.add_argument('--lr', type=float, default=0.00005, help='initial learning rate for adam')
         parser.add_argument('--weight_decay', type=float, default=1e-4, help='weight decay for Adam optimizer')
         parser.add_argument('--fc1_wd', type=float, default=0.01, help='L2 penalty factor on fc1 weights (prevents explosion)')
-        parser.add_argument('--pos_weight', type=float, default=1.5, help='weight for positive (fake) class in BCE loss')
+        parser.add_argument('--pos_weight', type=float, default=0.7, help='weight for positive (fake) class in BCE loss (<1 boosts fake recall)')
         parser.add_argument('--time_limit', type=float, default=0, help='max training time in hours (0 = no limit)')
         parser.add_argument('--use_attn_pool', action='store_true', help='use attention pooling instead of GAP')
         parser.add_argument('--multi_scale', action='store_true', help='use 3-scale NPR (0.25/0.50/0.75)')

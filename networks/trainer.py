@@ -33,7 +33,7 @@ class Trainer(BaseModel):
         self.use_tkp = model_kwargs['use_tkp']
 
         if self.isTrain:
-            pos_weight_val = getattr(opt, 'pos_weight', 1.5)
+            pos_weight_val = getattr(opt, 'pos_weight', 0.7)
             # Create on correct device from the start
             device = torch.device(f'cuda:{opt.gpu_ids[0]}') if opt.gpu_ids else torch.device('cpu')
             self.loss_fn = nn.BCEWithLogitsLoss(
